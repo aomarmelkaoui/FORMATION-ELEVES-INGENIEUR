@@ -1,401 +1,206 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Design Thinking Lab — Plateforme Éducative</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0a0f;
-    --bg2: #111118;
-    --bg3: #16161f;
-    --card: #1a1a24;
-    --border: rgba(255,255,255,0.06);
-    --border2: rgba(255,255,255,0.12);
-    --text: #f0eff8;
-    --muted: #8885a0;
-    --dim: #4a4860;
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161f;--card:#1a1a24;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);--text:#f0eff8;--muted:#8885a0;--dim:#4a4860;--emp:#ff6b8a;--emp-bg:rgba(255,107,138,0.08);--def:#5b8fff;--def-bg:rgba(91,143,255,0.08);--ide:#a78bfa;--ide-bg:rgba(167,139,250,0.08);--pro:#fb923c;--pro-bg:rgba(251,146,60,0.08);--tes:#34d399;--tes-bg:rgba(52,211,153,0.08);--biz:#f59e0b;--biz-bg:rgba(245,158,11,0.08);--pit:#ec4899;--pit-bg:rgba(236,72,153,0.08);--radius:14px;--radius-sm:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:17px;line-height:1.7;min-height:100vh}
+[lang="ar"] body,[dir="rtl"] body{font-family:'Cairo',sans-serif}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--dim);border-radius:2px}
+.header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;gap:1rem;height:62px;flex-wrap:wrap}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--text);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--emp);box-shadow:0 0 12px var(--emp);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.nav-tabs{display:flex;gap:3px;flex-wrap:wrap}
+.nav-tab{padding:5px 13px;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.nav-tab:hover{color:var(--text);background:var(--card)}
+.nav-tab.active{color:var(--text);background:var(--card);border-color:var(--border2)}
+.nav-tab svg{width:14px;height:14px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.score-pill{padding:5px 14px;border-radius:20px;background:var(--card);border:1px solid var(--border2);font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px;color:var(--text);white-space:nowrap}
+.score-pill span{color:var(--ide);font-size:15px;font-weight:600}
+.lang-switcher{display:flex;gap:3px;background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:3px}
+.lang-btn{padding:4px 10px;border-radius:5px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s}
+.lang-btn:hover{color:var(--text)}
+.lang-btn.active{background:var(--ide);color:#1a1030}
+.main{max-width:1100px;margin:0 auto;padding:2rem}
+.section{display:none;animation:fadeIn 0.3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hero{text-align:center;padding:3rem 0 2.5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;background:var(--ide-bg);border:1px solid rgba(167,139,250,0.2);color:var(--ide);font-size:14px;font-weight:500;margin-bottom:1.25rem}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;margin-bottom:1rem;background:linear-gradient(135deg,#f0eff8 0%,var(--ide) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--muted);max-width:560px;margin:0 auto 2rem;font-size:17px;line-height:1.7}
+.flow{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:2.5rem}
+.flow-step{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:30px;border:1px solid var(--border2);background:var(--card);cursor:pointer;transition:all 0.2s;font-size:14px;font-weight:500;color:var(--muted)}
+.flow-step:hover{color:var(--text);transform:translateY(-1px)}
+.flow-step.active{color:var(--text);border-color:currentColor}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--bg3);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.flow-arrow{color:var(--dim);font-size:14px}
+.steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:2rem}
+.step-detail{background:var(--card);padding:1.75rem;transition:background 0.2s;cursor:pointer}
+.step-detail:hover{background:var(--bg3)}
+.step-detail.span2{grid-column:span 2}
+.step-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:1rem}
+.step-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.step-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.step-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text)}
+.step-desc{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:1.25rem}
+.step-example{padding:12px 16px;border-radius:var(--radius-sm);font-size:14px;line-height:1.6;border-left:2px solid currentColor;background:var(--bg3);margin-bottom:1.25rem}
+.tools-row{display:flex;gap:8px;flex-wrap:wrap}
+.tool-chip{padding:5px 12px;border-radius:6px;font-size:13px;font-weight:500;background:var(--bg2);border:1px solid var(--border2);color:var(--muted);cursor:pointer;transition:all 0.2s}
+.tool-chip:hover{color:var(--text);border-color:currentColor}
+.quiz-wrap{max-width:680px;margin:0 auto}
+.quiz-progress{display:flex;align-items:center;gap:12px;margin-bottom:2rem}
+.q-bar{flex:1;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.q-bar-fill{height:100%;background:var(--ide);border-radius:2px;transition:width 0.4s ease}
+.q-label{font-size:13px;color:var(--muted);min-width:60px;text-align:right}
+.quiz-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:2rem}
+.quiz-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.25rem}
+.quiz-question{font-family:'Syne',sans-serif;font-size:19px;font-weight:600;line-height:1.4;color:var(--text);margin-bottom:1.5rem}
+.opt{width:100%;text-align:left;padding:13px 17px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--bg2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:all 0.2s}
+.opt:hover:not(.locked){border-color:var(--ide);background:rgba(167,139,250,0.04)}
+.opt.correct{border-color:var(--tes);background:rgba(52,211,153,0.08)}
+.opt.wrong{border-color:var(--emp);background:rgba(255,107,138,0.08)}
+.opt.locked{cursor:default}
+.opt-letter{width:28px;height:28px;border-radius:6px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.feedback-box{padding:16px;border-radius:var(--radius-sm);font-size:15px;line-height:1.6;margin-top:1rem;display:none}
+.feedback-box.show{display:block}
+.feedback-box.good{background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);color:#6ee7b7}
+.feedback-box.bad{background:rgba(255,107,138,0.08);border:1px solid rgba(255,107,138,0.2);color:#fca5a5}
+.feedback-title{font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.btn{padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;border:1px solid var(--border2);background:var(--card);color:var(--text)}
+.btn:hover{background:var(--bg3)}
+.btn.primary{background:var(--ide);border-color:var(--ide);color:#1a1030}
+.btn.primary:hover{opacity:.88}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.25rem}
+.result-card{text-align:center;padding:3rem 2rem;background:var(--card);border-radius:var(--radius);border:1px solid var(--border)}
+.result-score{font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;line-height:1;margin-bottom:.5rem}
+.result-label{font-size:14px;color:var(--muted);margin-bottom:2rem}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:360px;margin:0 auto 2rem}
+.result-stat{background:var(--bg2);border-radius:var(--radius-sm);padding:1rem}
+.result-stat-val{font-family:'Syne',sans-serif;font-size:24px;font-weight:700}
+.result-stat-lbl{font-size:12px;color:var(--muted);margin-top:2px}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.badge-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:1.5rem 1rem;text-align:center;transition:all .25s;display:flex;flex-direction:column;align-items:center;gap:10px}
+.badge-card.unlocked{border-color:var(--tes)}
+.badge-card.unlocked:hover{transform:translateY(-3px)}
+.badge-card.locked{opacity:.4;filter:grayscale(1)}
+.badge-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px}
+.badge-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text)}
+.badge-desc{font-size:12px;color:var(--muted);line-height:1.4}
+.badge-status{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-status.ok{background:rgba(52,211,153,0.12);color:var(--tes)}
+.badge-status.no{background:var(--bg3);color:var(--dim)}
+.cases-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden}
+.case-item{background:var(--card)}
+.case-header{padding:1.5rem;cursor:pointer;display:flex;align-items:center;gap:14px;transition:background .2s}
+.case-header:hover{background:var(--bg3)}
+.case-number{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;flex-shrink:0}
+.case-meta{flex:1}
+.case-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.case-domain{font-size:13px;color:var(--muted)}
+.case-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{padding:2px 9px;border-radius:4px;font-size:12px;font-weight:500;background:var(--bg3);border:1px solid var(--border2);color:var(--muted)}
+.case-chevron{color:var(--dim);font-size:18px;transition:transform .2s}
+.case-chevron.open{transform:rotate(180deg)}
+.case-body{display:none;padding:0 1.5rem 1.5rem}
+.case-body.open{display:block}
+.case-problem{padding:14px 16px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1.25rem}
+.case-problem strong{color:var(--emp);font-weight:500}
+.case-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem}
+.case-step{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--bg2);border-radius:var(--radius-sm)}
+.case-step-badge{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.case-step-text{font-size:14px;color:var(--muted);line-height:1.5}
+.case-outcome{padding:14px 16px;border-radius:var(--radius-sm);background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.15);font-size:14px;color:#6ee7b7;line-height:1.6;margin-bottom:1rem}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1.5rem}
+.compare-col{background:var(--card);padding:1.75rem}
+.compare-col.featured{background:rgba(91,143,255,0.04)}
+.compare-col-head{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
+.compare-icon{font-size:28px}
+.compare-name{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text)}
+.compare-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.compare-row{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+.compare-row:last-child{border-bottom:none}
+.compare-dot{width:6px;height:6px;border-radius:50%;margin-top:7px;flex-shrink:0}
+.compare-key{font-size:14px;font-weight:500;color:var(--text)}
+.compare-val{font-size:13px;color:var(--muted);line-height:1.4}
+.project-wrap{max-width:680px;margin:0 auto}
+.form-group{margin-bottom:1.25rem}
+.form-label{font-size:14px;font-weight:500;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.form-label span{color:var(--ide)}
+textarea{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 14px;resize:vertical;min-height:90px;transition:border-color .2s;outline:none}
+textarea:focus{border-color:var(--ide)}
+textarea::placeholder{color:var(--dim)}
+.section-header{margin-bottom:2rem}
+.section-header h2{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--text);margin-bottom:6px}
+.section-header p{color:var(--muted);font-size:16px}
 
-    --emp: #ff6b8a;
-    --emp-bg: rgba(255,107,138,0.08);
-    --def: #5b8fff;
-    --def-bg: rgba(91,143,255,0.08);
-    --ide: #a78bfa;
-    --ide-bg: rgba(167,139,250,0.08);
-    --pro: #fb923c;
-    --pro-bg: rgba(251,146,60,0.08);
-    --tes: #34d399;
-    --tes-bg: rgba(52,211,153,0.08);
+/* JOUR 3 & 4 SPECIFIC */
+.day-hero{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.day-hero::after{content:'';position:absolute;top:0;right:0;width:200px;height:100%;background:radial-gradient(ellipse at right,var(--accent-glow,rgba(245,158,11,0.06)) 0%,transparent 70%);pointer-events:none}
+.day-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.day-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--text);margin-bottom:.5rem}
+.day-subtitle{font-size:16px;color:var(--muted);line-height:1.7}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:1.5rem}
+.module-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:all .2s}
+.module-card:hover{border-color:var(--border2);background:var(--bg3)}
+.module-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:.75rem}
+.module-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+.module-desc{font-size:14px;color:var(--muted);line-height:1.6}
+.canvas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1.5rem}
+.canvas-cell{background:var(--card);padding:1rem;min-height:100px}
+.canvas-cell:hover{background:var(--bg3)}
+.canvas-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.canvas-content{font-size:13px;color:var(--muted);line-height:1.5}
+.canvas-cell.span2{grid-column:span 2}
+.canvas-cell.tall{grid-row:span 2}
+.timeline{display:flex;flex-direction:column;gap:0;margin-bottom:1.5rem}
+.timeline-item{display:flex;gap:16px;padding:1.25rem 0;border-bottom:1px solid var(--border)}
+.timeline-item:last-child{border-bottom:none}
+.timeline-left{display:flex;flex-direction:column;align-items:center;gap:0;min-width:40px}
+.timeline-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.timeline-line{width:2px;flex:1;background:var(--border);margin-top:6px}
+.timeline-content{}
+.timeline-time{font-size:12px;font-weight:600;color:var(--ide);margin-bottom:4px;letter-spacing:.04em}
+.timeline-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.timeline-desc{font-size:14px;color:var(--muted);line-height:1.5}
+.pitch-tips{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.tip-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;display:flex;gap:10px}
+.tip-icon{font-size:22px;flex-shrink:0}
+.tip-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.tip-desc{font-size:13px;color:var(--muted);line-height:1.4}
+.jury-criteria{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.criteria-row{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--card);border-radius:var(--radius-sm);border:1px solid var(--border)}
+.criteria-name{font-size:14px;font-weight:500;color:var(--text);min-width:160px}
+.criteria-bar-wrap{flex:1;background:var(--bg3);border-radius:4px;height:8px;overflow:hidden}
+.criteria-bar{height:8px;border-radius:4px}
+.criteria-pts{font-size:14px;font-weight:600;min-width:50px;text-align:right}
+.slide-preview{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:1.5rem;margin-bottom:8px}
+.slide-num{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.slide-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.slide-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.slides-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
 
-    --radius: 14px;
-    --radius-sm: 8px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 17px;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-
-  /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--bg2); }
-  ::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 2px; }
-
-  /* HEADER */
-  .header {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(10,10,15,0.9);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    display: flex; align-items: center; gap: 1.5rem;
-    height: 60px;
-  }
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 22px;
-    color: var(--text);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .logo-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--emp);
-    box-shadow: 0 0 12px var(--emp);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-  .nav-tabs {
-    display: flex; gap: 4px; margin-left: auto;
-  }
-  .nav-tab {
-    padding: 6px 16px; border-radius: 6px;
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 500;
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .nav-tab:hover { color: var(--text); background: var(--card); }
-  .nav-tab.active { color: var(--text); background: var(--card); border-color: var(--border2); }
-  .nav-tab svg { width: 15px; height: 15px; }
-
-  .score-pill {
-    margin-left: auto;
-    padding: 5px 14px;
-    border-radius: 20px;
-    background: var(--card);
-    border: 1px solid var(--border2);
-    font-size: 14px; font-weight: 500;
-    display: flex; align-items: center; gap: 8px;
-    color: var(--text);
-  }
-  .score-pill span { color: var(--ide); font-size: 16px; font-weight: 600; }
-
-  /* LAYOUT */
-  .main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-
-  /* SECTIONS */
-  .section { display: none; animation: fadeIn 0.3s ease; }
-  .section.active { display: block; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-  /* HERO */
-  .hero {
-    text-align: center; padding: 3rem 0 2.5rem;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
-    width: 600px; height: 600px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 5px 14px; border-radius: 20px;
-    background: var(--ide-bg);
-    border: 1px solid rgba(167,139,250,0.2);
-    color: var(--ide); font-size: 14px; font-weight: 500;
-    margin-bottom: 1.25rem;
-    animation: fadeIn 0.5s ease;
-  }
-  .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 800; line-height: 1.1;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #f0eff8 0%, var(--ide) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .hero p {
-    color: var(--muted); max-width: 500px; margin: 0 auto 2rem;
-    font-size: 18px; line-height: 1.7;
-  }
-
-  /* FLOW */
-  .flow {
-    display: flex; align-items: center; justify-content: center;
-    gap: 6px; flex-wrap: wrap; margin-bottom: 2.5rem;
-  }
-  .flow-step {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 18px; border-radius: 30px;
-    border: 1px solid var(--border2);
-    background: var(--card);
-    cursor: pointer; transition: all 0.2s;
-    font-size: 15px; font-weight: 500;
-    color: var(--muted);
-  }
-  .flow-step:hover { border-color: var(--border2); color: var(--text); transform: translateY(-1px); }
-  .flow-step.active { color: var(--text); border-color: currentColor; }
-  .flow-step.done .step-num { background: var(--tes); color: var(--bg); }
-  .step-num {
-    width: 20px; height: 20px; border-radius: 50%;
-    background: var(--bg3); font-size: 10px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .flow-arrow { color: var(--dim); font-size: 14px; }
-
-  /* STEP CARDS */
-  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem; }
-  .step-detail { background: var(--card); padding: 1.75rem; transition: background 0.2s; }
-  .step-detail:hover { background: var(--bg3); }
-  .step-detail.span2 { grid-column: span 2; }
-  .step-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1rem; }
-  .step-icon {
-    width: 46px; height: 46px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-  }
-  .step-label { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
-  .step-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); }
-  .step-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
-  .step-example {
-    padding: 12px 16px; border-radius: var(--radius-sm);
-    font-size: 15px; line-height: 1.6;
-    border-left: 2px solid currentColor;
-    background: var(--bg3);
-    margin-bottom: 1.25rem;
-  }
-  .tools-row { display: flex; gap: 8px; flex-wrap: wrap; }
-  .tool-chip {
-    padding: 6px 14px; border-radius: 6px;
-    font-size: 14px; font-weight: 500;
-    background: var(--bg2); border: 1px solid var(--border2);
-    color: var(--muted); cursor: pointer; transition: all 0.2s;
-  }
-  .tool-chip:hover { color: var(--text); border-color: currentColor; }
-
-  /* QUIZ */
-  .quiz-wrap { max-width: 680px; margin: 0 auto; }
-  .quiz-progress {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 2rem;
-  }
-  .q-bar { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
-  .q-bar-fill { height: 100%; background: var(--ide); border-radius: 2px; transition: width 0.4s ease; }
-  .q-label { font-size: 13px; color: var(--muted); min-width: 60px; text-align: right; }
-
-  .quiz-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 2rem; }
-  .quiz-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 4px 12px; border-radius: 6px;
-    font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-    margin-bottom: 1.25rem;
-  }
-  .quiz-question {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px; font-weight: 600; line-height: 1.4;
-    color: var(--text); margin-bottom: 1.5rem;
-  }
-  .opt {
-    width: 100%; text-align: left; padding: 14px 18px;
-    border-radius: var(--radius-sm); border: 1px solid var(--border2);
-    background: var(--bg2); color: var(--text);
-    font-family: 'DM Sans', sans-serif; font-size: 16px;
-    cursor: pointer; margin-bottom: 10px;
-    display: flex; align-items: center; gap: 12px;
-    transition: all 0.2s;
-  }
-  .opt:hover:not(.locked) { border-color: var(--ide); background: rgba(167,139,250,0.04); }
-  .opt.correct { border-color: var(--tes); background: rgba(52,211,153,0.08); }
-  .opt.wrong { border-color: var(--emp); background: rgba(255,107,138,0.08); }
-  .opt.locked { cursor: default; }
-  .opt-letter {
-    width: 28px; height: 28px; border-radius: 6px;
-    background: var(--bg3); border: 1px solid var(--border2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700; flex-shrink: 0;
-  }
-  .feedback-box {
-    padding: 16px; border-radius: var(--radius-sm);
-    font-size: 15px; line-height: 1.6; margin-top: 1rem;
-    display: none;
-  }
-  .feedback-box.show { display: block; }
-  .feedback-box.good { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: #6ee7b7; }
-  .feedback-box.bad { background: rgba(255,107,138,0.08); border: 1px solid rgba(255,107,138,0.2); color: #fca5a5; }
-  .feedback-title { font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-
-  .btn {
-    padding: 11px 24px; border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
-    cursor: pointer; transition: all 0.2s; border: 1px solid var(--border2);
-    background: var(--card); color: var(--text);
-  }
-  .btn:hover { background: var(--bg3); border-color: var(--border2); }
-  .btn.primary { background: var(--ide); border-color: var(--ide); color: #1a1030; }
-  .btn.primary:hover { opacity: 0.88; }
-  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.25rem; }
-
-  /* RESULT */
-  .result-card { text-align: center; padding: 3rem 2rem; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); }
-  .result-score { font-family: 'Syne', sans-serif; font-size: 5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; }
-  .result-label { font-size: 14px; color: var(--muted); margin-bottom: 2rem; }
-  .result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 360px; margin: 0 auto 2rem; }
-  .result-stat { background: var(--bg2); border-radius: var(--radius-sm); padding: 1rem; }
-  .result-stat-val { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; }
-  .result-stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-  /* BADGES */
-  .badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 12px; }
-  .badge-card {
-    background: var(--card); border-radius: var(--radius);
-    border: 1px solid var(--border); padding: 1.5rem 1rem;
-    text-align: center; transition: all 0.25s;
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-  }
-  .badge-card.unlocked { border-color: var(--tes); }
-  .badge-card.unlocked:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(52,211,153,0.12); }
-  .badge-card.locked { opacity: 0.4; filter: grayscale(1); }
-  .badge-icon {
-    width: 56px; height: 56px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 26px;
-  }
-  .badge-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
-  .badge-desc { font-size: 13px; color: var(--muted); line-height: 1.4; }
-  .badge-status {
-    padding: 3px 10px; border-radius: 20px; font-size: 13px; font-weight: 500;
-  }
-  .badge-status.ok { background: rgba(52,211,153,0.12); color: var(--tes); }
-  .badge-status.no { background: var(--bg3); color: var(--dim); }
-
-  /* CASES */
-  .cases-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; }
-  .case-item { background: var(--card); }
-  .case-header {
-    padding: 1.5rem; cursor: pointer; display: flex; align-items: center; gap: 14px;
-    transition: background 0.2s;
-  }
-  .case-header:hover { background: var(--bg3); }
-  .case-number {
-    width: 36px; height: 36px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800;
-    flex-shrink: 0;
-  }
-  .case-meta { flex: 1; }
-  .case-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .case-domain { font-size: 14px; color: var(--muted); }
-  .case-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-  .tag {
-    padding: 3px 10px; border-radius: 4px; font-size: 13px; font-weight: 500;
-    background: var(--bg3); border: 1px solid var(--border2); color: var(--muted);
-  }
-  .case-chevron { color: var(--dim); font-size: 18px; transition: transform 0.2s; }
-  .case-chevron.open { transform: rotate(180deg); }
-
-  .case-body { display: none; padding: 0 1.5rem 1.5rem; }
-  .case-body.open { display: block; }
-  .case-problem {
-    padding: 14px 16px; border-radius: var(--radius-sm);
-    background: var(--bg2); border: 1px solid var(--border);
-    font-size: 15px; color: var(--muted); line-height: 1.6;
-    margin-bottom: 1.25rem;
-  }
-  .case-problem strong { color: var(--emp); font-weight: 500; }
-  .case-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
-  .case-step {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 12px 14px; background: var(--bg2); border-radius: var(--radius-sm);
-  }
-  .case-step-badge {
-    padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600;
-    white-space: nowrap; flex-shrink: 0; margin-top: 1px;
-  }
-  .case-step-text { font-size: 15px; color: var(--muted); line-height: 1.5; }
-  .case-outcome {
-    padding: 14px 16px; border-radius: var(--radius-sm);
-    background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.15);
-    font-size: 15px; color: #6ee7b7; line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-  .case-outcome strong { font-weight: 600; }
-
-  /* COMPARE */
-  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
-  .compare-col { background: var(--card); padding: 1.75rem; }
-  .compare-col.featured { background: rgba(91,143,255,0.04); }
-  .compare-col-head { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
-  .compare-icon { font-size: 28px; }
-  .compare-name { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--text); }
-  .compare-sub { font-size: 14px; color: var(--muted); margin-top: 2px; }
-  .compare-row {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 10px 0; border-bottom: 1px solid var(--border);
-  }
-  .compare-row:last-child { border-bottom: none; }
-  .compare-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
-  .compare-key { font-size: 15px; font-weight: 500; color: var(--text); }
-  .compare-val { font-size: 14px; color: var(--muted); line-height: 1.4; }
-
-  /* PROJECT */
-  .project-wrap { max-width: 680px; margin: 0 auto; }
-  .form-group { margin-bottom: 1.25rem; }
-  .form-label { font-size: 15px; font-weight: 500; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-  .form-label span { color: var(--ide); }
-  textarea {
-    width: 100%; background: var(--card); border: 1px solid var(--border2);
-    border-radius: var(--radius-sm); color: var(--text);
-    font-family: 'DM Sans', sans-serif; font-size: 16px; padding: 12px 14px;
-    resize: vertical; min-height: 90px; transition: border-color 0.2s;
-    outline: none;
-  }
-  textarea:focus { border-color: var(--ide); }
-  textarea::placeholder { color: var(--dim); }
-
-  /* SECTION HEADERS */
-  .section-header { margin-bottom: 2rem; }
-  .section-header h2 {
-    font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800;
-    color: var(--text); margin-bottom: 6px;
-  }
-  .section-header p { color: var(--muted); font-size: 17px; }
-
-  /* MOBILE */
-  @media (max-width: 640px) {
-    .main { padding: 1rem; }
-    .steps-grid { grid-template-columns: 1fr; }
-    .step-detail.span2 { grid-column: 1; }
-    .compare-grid { grid-template-columns: 1fr; }
-    .result-grid { grid-template-columns: 1fr; max-width: 200px; }
-    .nav-tabs { gap: 2px; }
-    .nav-tab { padding: 5px 10px; font-size: 12px; }
-    .header { padding: 0 1rem; gap: 8px; }
-    .score-pill { display: none; }
-  }
+@media(max-width:768px){
+  .main{padding:1rem}
+  .steps-grid,.compare-grid{grid-template-columns:1fr}
+  .step-detail.span2{grid-column:1}
+  .result-grid{grid-template-columns:1fr;max-width:200px}
+  .nav-tabs{gap:2px}
+  .nav-tab{padding:4px 8px;font-size:12px}
+  .header{padding:0 1rem;height:auto;padding:8px 1rem}
+  .score-pill{display:none}
+  .canvas-grid{grid-template-columns:1fr}
+  .canvas-cell.span2,.canvas-cell.tall{grid-column:1;grid-row:auto}
+  .pitch-tips{grid-template-columns:1fr}
+  .slides-grid{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -405,37 +210,55 @@
     <div class="logo-dot"></div>
     DT Lab
   </div>
-  <nav class="nav-tabs">
-    <button class="nav-tab active" onclick="showSection('accueil',this)">
+  <nav class="nav-tabs" id="main-nav">
+    <button class="nav-tab active" onclick="showSection('accueil',this)" data-key="nav_accueil">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg>
-      Accueil
+      <span data-t="nav_accueil">Accueil</span>
     </button>
     <button class="nav-tab" onclick="showSection('quiz',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-      Quiz
+      <span data-t="nav_quiz">Quiz</span>
     </button>
     <button class="nav-tab" onclick="showSection('badges',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-5 3 1.5-5.5L4 8.5l5.5-.5L12 3l2.5 5 5.5.5-4.5 4L17 18z"/></svg>
-      Badges
+      <span data-t="nav_badges">Badges</span>
     </button>
     <button class="nav-tab" onclick="showSection('cases',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2"/><path d="M8 7V5a2 2 0 00-4 0v2"/></svg>
-      Cas
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2"/></svg>
+      <span data-t="nav_cas">Cas</span>
     </button>
     <button class="nav-tab" onclick="showSection('compare',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-      Comparer
+      <span data-t="nav_comparer">Comparer</span>
+    </button>
+    <button class="nav-tab" onclick="showSection('jour3',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <span data-t="nav_jour3">Jour 3</span>
+    </button>
+    <button class="nav-tab" onclick="showSection('jour4',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+      <span data-t="nav_jour4">Jour 4</span>
     </button>
     <button class="nav-tab" onclick="showSection('projet',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
-      Mon projet
+      <span data-t="nav_projet">Mon projet</span>
+    </button>
+    <button onclick="goGuide()" id="guide-link"
+       style="padding:5px 14px;border-radius:6px;border:1px solid rgba(167,139,250,0.35);background:rgba(167,139,250,0.10);color:#a78bfa;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;margin-left:6px;transition:all 0.2s"
+       onmouseover="this.style.background='rgba(167,139,250,0.22)'"
+       onmouseout="this.style.background='rgba(167,139,250,0.10)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      <span id="guide-link-txt">📖 Guide</span>
     </button>
   </nav>
-  <a href="guide.html" style="padding:6px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#8885a0;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;transition:all 0.2s;white-space:nowrap" onmouseover="this.style.color='#f0eff8';this.style.background='#1a1a24'" onmouseout="this.style.color='#8885a0';this.style.background='transparent'">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-    Guide utilisateur
-  </a>
-  <div class="score-pill">Score <span id="score-display">0</span> pts</div>
+  <div class="header-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('ar')">ع</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <div class="score-pill"><span data-t="score_label">Score</span> <span id="score-display">0</span> pts</div>
+  </div>
 </header>
 
 <main class="main">
@@ -445,52 +268,39 @@
   <div class="hero">
     <div class="hero-badge">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      Plateforme pédagogique · Élèves ingénieurs
+      <span data-t="hero_badge">Plateforme pédagogique · Élèves ingénieurs</span>
     </div>
-    <h1>Design Thinking<br>Interactif</h1>
-    <p>Maîtrisez les 5 étapes de la méthode centrée utilisateur. Quiz, badges, cas réels d'ingénierie.</p>
-
+    <h1 data-t="hero_title">Design Thinking<br>Interactif</h1>
+    <p data-t="hero_sub">Maîtrisez les 5 étapes de la méthode centrée utilisateur. Quiz, badges, cas réels d'ingénierie.</p>
     <div class="flow" id="flow-pills">
-      <div class="flow-step active" style="color:var(--emp)" data-idx="0" onclick="goStep(0)">
-        <span class="step-num" style="background:var(--emp-bg);color:var(--emp)">1</span> Empathie
-      </div>
+      <div class="flow-step active" style="color:var(--emp)" onclick="goStep(0)"><span class="step-num" style="background:var(--emp-bg);color:var(--emp)">1</span><span data-t="step1_name">Empathie</span></div>
       <span class="flow-arrow">›</span>
-      <div class="flow-step" style="color:var(--def)" data-idx="1" onclick="goStep(1)">
-        <span class="step-num">2</span> Définition
-      </div>
+      <div class="flow-step" style="color:var(--def)" onclick="goStep(1)"><span class="step-num">2</span><span data-t="step2_name">Définition</span></div>
       <span class="flow-arrow">›</span>
-      <div class="flow-step" style="color:var(--ide)" data-idx="2" onclick="goStep(2)">
-        <span class="step-num">3</span> Idéation
-      </div>
+      <div class="flow-step" style="color:var(--ide)" onclick="goStep(2)"><span class="step-num">3</span><span data-t="step3_name">Idéation</span></div>
       <span class="flow-arrow">›</span>
-      <div class="flow-step" style="color:var(--pro)" data-idx="3" onclick="goStep(3)">
-        <span class="step-num">4</span> Prototype
-      </div>
+      <div class="flow-step" style="color:var(--pro)" onclick="goStep(3)"><span class="step-num">4</span><span data-t="step4_name">Prototype</span></div>
       <span class="flow-arrow">›</span>
-      <div class="flow-step" style="color:var(--tes)" data-idx="4" onclick="goStep(4)">
-        <span class="step-num">5</span> Test
-      </div>
+      <div class="flow-step" style="color:var(--tes)" onclick="goStep(4)"><span class="step-num">5</span><span data-t="step5_name">Test</span></div>
     </div>
   </div>
-
   <div class="steps-grid" id="steps-grid"></div>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
     <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
-      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--ide)" id="stat-score">0</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px">Points accumulés</div>
+      <div style="font-size:30px;font-weight:800;font-family:'Syne',sans-serif;color:var(--ide)" id="stat-score">0</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px" data-t="stat_pts">Points accumulés</div>
     </div>
     <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
-      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--tes)" id="stat-badges">0/6</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px">Badges débloqués</div>
+      <div style="font-size:30px;font-weight:800;font-family:'Syne',sans-serif;color:var(--tes)" id="stat-badges">0/6</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px" data-t="stat_badges">Badges débloqués</div>
     </div>
     <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
-      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--pro)" id="stat-correct">0/6</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px">Questions réussies</div>
+      <div style="font-size:30px;font-weight:800;font-family:'Syne',sans-serif;color:var(--pro)" id="stat-correct">0/6</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px" data-t="stat_correct">Questions réussies</div>
     </div>
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;cursor:pointer" onclick="showSection('quiz',document.querySelector('.nav-tab:nth-child(2)'))">
-      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--emp)">6</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:4px">Questions disponibles →</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;cursor:pointer" onclick="showSection('quiz',document.querySelectorAll('.nav-tab')[1])">
+      <div style="font-size:30px;font-weight:800;font-family:'Syne',sans-serif;color:var(--emp)">8</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px" data-t="stat_qs">Questions disponibles →</div>
     </div>
   </div>
 </section>
@@ -499,8 +309,8 @@
 <section id="sec-quiz" class="section">
   <div class="quiz-wrap">
     <div class="section-header">
-      <h2>Quiz Design Thinking</h2>
-      <p>6 questions contextualisées pour l'ingénierie marocaine</p>
+      <h2 data-t="quiz_title">Quiz Design Thinking</h2>
+      <p data-t="quiz_sub">8 questions contextualisées — DT, Business Model & Pitch</p>
     </div>
     <div id="quiz-container"></div>
   </div>
@@ -509,8 +319,8 @@
 <!-- BADGES -->
 <section id="sec-badges" class="section">
   <div class="section-header">
-    <h2>Mes badges</h2>
-    <p>Débloqués en réussissant les questions du quiz</p>
+    <h2 data-t="badges_title">Mes badges</h2>
+    <p data-t="badges_sub">Débloqués en réussissant les questions du quiz</p>
   </div>
   <div class="badges-grid" id="badges-grid"></div>
 </section>
@@ -518,8 +328,8 @@
 <!-- CAS -->
 <section id="sec-cases" class="section">
   <div class="section-header">
-    <h2>Études de cas</h2>
-    <p>Projets réels d'ingénierie appliqués au Design Thinking</p>
+    <h2 data-t="cas_title">Études de cas</h2>
+    <p data-t="cas_sub">Projets réels d'ingénierie appliqués au Design Thinking</p>
   </div>
   <div class="cases-list" id="cases-list"></div>
 </section>
@@ -527,46 +337,278 @@
 <!-- COMPARER -->
 <section id="sec-compare" class="section">
   <div class="section-header">
-    <h2>Design Thinking vs Lean Startup</h2>
-    <p>Deux approches complémentaires pour l'innovation</p>
+    <h2 data-t="compare_title">Design Thinking vs Lean Startup</h2>
+    <p data-t="compare_sub">Deux approches complémentaires pour l'innovation</p>
   </div>
   <div class="compare-grid">
     <div class="compare-col featured">
-      <div class="compare-col-head">
-        <span class="compare-icon">🎯</span>
-        <div>
-          <div class="compare-name" style="color:var(--def)">Design Thinking</div>
-          <div class="compare-sub">Approche centrée utilisateur</div>
-        </div>
-      </div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Focus principal</div><div class="compare-val">Besoins et émotions humains</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Objectif</div><div class="compare-val">Innovation créative et UX</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Prototype</div><div class="compare-val">Maquettes et tests qualitatifs</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Itération</div><div class="compare-val">Retours utilisateurs riches</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Idéal pour</div><div class="compare-val">Produits complexes, services publics, éducation</div></div></div>
+      <div class="compare-col-head"><span class="compare-icon">🎯</span><div><div class="compare-name" style="color:var(--def)">Design Thinking</div><div class="compare-sub" data-t="dt_approach">Approche centrée utilisateur</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key" data-t="focus">Focus principal</div><div class="compare-val" data-t="dt_focus">Besoins et émotions humains</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key" data-t="objectif">Objectif</div><div class="compare-val" data-t="dt_obj">Innovation créative et UX</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key" data-t="prototype">Prototype</div><div class="compare-val" data-t="dt_proto">Maquettes et tests qualitatifs</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key" data-t="iteration">Itération</div><div class="compare-val" data-t="dt_iter">Retours utilisateurs riches</div></div></div>
     </div>
     <div class="compare-col">
-      <div class="compare-col-head">
-        <span class="compare-icon">🚀</span>
-        <div>
-          <div class="compare-name" style="color:var(--pro)">Lean Startup</div>
-          <div class="compare-sub">Validation économique rapide</div>
-        </div>
-      </div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Focus principal</div><div class="compare-val">Viabilité du modèle économique</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Objectif</div><div class="compare-val">Optimisation et métriques</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Prototype</div><div class="compare-val">MVP — version minimale fonctionnelle</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Itération</div><div class="compare-val">A/B tests, analytics, data-driven</div></div></div>
-      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Idéal pour</div><div class="compare-val">Startups, SaaS, produits numériques</div></div></div>
+      <div class="compare-col-head"><span class="compare-icon">🚀</span><div><div class="compare-name" style="color:var(--pro)">Lean Startup</div><div class="compare-sub" data-t="lean_approach">Validation économique rapide</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key" data-t="focus">Focus principal</div><div class="compare-val" data-t="lean_focus">Viabilité du modèle économique</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key" data-t="objectif">Objectif</div><div class="compare-val" data-t="lean_obj">Optimisation et métriques</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key" data-t="prototype">Prototype</div><div class="compare-val" data-t="lean_proto">MVP — version minimale fonctionnelle</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key" data-t="iteration">Itération</div><div class="compare-val" data-t="lean_iter">A/B tests, analytics, data-driven</div></div></div>
     </div>
   </div>
   <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
-    <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--ide);margin-bottom:10px">En pratique, les deux se combinent</div>
-    <div style="font-size:14px;color:var(--muted);line-height:1.7">
-      Le Design Thinking permet de comprendre le besoin humain et concevoir une solution pertinente.
-      Le Lean Startup permet ensuite de tester rapidement la viabilité économique avec un MVP.
-      Cette combinaison est devenue le standard des projets technologiques innovants dans les startups et les grands groupes.
+    <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--ide);margin-bottom:10px" data-t="combine_title">En pratique, les deux se combinent</div>
+    <div style="font-size:14px;color:var(--muted);line-height:1.7" data-t="combine_desc">Le Design Thinking permet de comprendre le besoin humain. Le Lean Startup valide la viabilité économique avec un MVP. Cette combinaison est le standard des projets technologiques innovants.</div>
+  </div>
+</section>
+
+<!-- JOUR 3 -->
+<section id="sec-jour3" class="section">
+  <div class="day-hero" style="--accent-glow:rgba(245,158,11,0.08)">
+    <div class="day-badge" style="background:var(--biz-bg);color:var(--biz);border:1px solid rgba(245,158,11,0.2)">
+      📅 <span data-t="j3_badge">Jour 3</span>
     </div>
+    <div class="day-title" data-t="j3_title">Business Model & Go-To-Market</div>
+    <div class="day-subtitle" data-t="j3_sub">Transformer votre solution Design Thinking en un modèle économique viable et une stratégie de mise sur le marché concrète.</div>
+  </div>
+
+  <div class="section-header" style="margin-top:1.5rem">
+    <h2 data-t="bmc_title">Business Model Canvas</h2>
+    <p data-t="bmc_sub">Les 9 blocs fondamentaux pour décrire votre modèle économique</p>
+  </div>
+
+  <div class="canvas-grid" style="grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto auto">
+    <div class="canvas-cell tall" style="background:rgba(167,139,250,0.05);grid-row:span 2">
+      <div class="canvas-label" style="color:var(--ide)">🤝 <span data-t="bmc_partners">Partenaires clés</span></div>
+      <div class="canvas-content" data-t="bmc_partners_desc">Universités, startups tech, collectivités locales, investisseurs, fournisseurs stratégiques</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="canvas-label" style="color:var(--pro)">⚙️ <span data-t="bmc_activities">Activités clés</span></div>
+      <div class="canvas-content" data-t="bmc_activities_desc">Développement produit, formation utilisateurs, R&D, support client</div>
+    </div>
+    <div class="canvas-cell tall" style="background:rgba(255,107,138,0.05);grid-row:span 2">
+      <div class="canvas-label" style="color:var(--emp)">💎 <span data-t="bmc_value">Proposition de valeur</span></div>
+      <div class="canvas-content" data-t="bmc_value_desc">Solution unique centrée sur l'utilisateur. Résout un problème réel validé par la démarche DT. Accessible, scalable, différenciée.</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="canvas-label" style="color:var(--tes)">💬 <span data-t="bmc_relation">Relation client</span></div>
+      <div class="canvas-content" data-t="bmc_relation_desc">Support personnalisé, communauté, self-service, abonnement</div>
+    </div>
+    <div class="canvas-cell tall" style="background:rgba(91,143,255,0.05);grid-row:span 2">
+      <div class="canvas-label" style="color:var(--def)">👥 <span data-t="bmc_segments">Segments clients</span></div>
+      <div class="canvas-content" data-t="bmc_segments_desc">Étudiants ingénieurs, PME marocaines, collectivités, startups innovantes, secteur éducatif</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="canvas-label" style="color:var(--biz)">🏗️ <span data-t="bmc_resources">Ressources clés</span></div>
+      <div class="canvas-content" data-t="bmc_resources_desc">Équipe technique, IP / brevets, données utilisateurs, infrastructure cloud</div>
+    </div>
+    <div class="canvas-cell">
+      <div class="canvas-label" style="color:var(--def)">📢 <span data-t="bmc_channels">Canaux</span></div>
+      <div class="canvas-content" data-t="bmc_channels_desc">Plateforme web, appli mobile, réseaux sociaux, partenaires académiques</div>
+    </div>
+    <div class="canvas-cell span2" style="background:rgba(255,107,138,0.04)">
+      <div class="canvas-label" style="color:var(--emp)">💸 <span data-t="bmc_costs">Structure de coûts</span></div>
+      <div class="canvas-content" data-t="bmc_costs_desc">Développement & infrastructure (40%) · Équipe & RH (35%) · Marketing & acquisition (15%) · Opérations (10%)</div>
+    </div>
+    <div class="canvas-cell span2" style="background:rgba(52,211,153,0.04)">
+      <div class="canvas-label" style="color:var(--tes)">💰 <span data-t="bmc_revenue">Sources de revenus</span></div>
+      <div class="canvas-content" data-t="bmc_revenue_desc">Abonnement SaaS · Licences institutionnelles · Formation certifiante · API & intégrations · Freemium → Premium</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <h2 data-t="gtm_title">Stratégie Go-To-Market (GTM)</h2>
+    <p data-t="gtm_sub">Plan de lancement en 4 phases pour atteindre votre marché cible</p>
+  </div>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <div class="module-icon" style="background:var(--emp-bg)">🎯</div>
+      <div class="module-title" data-t="gtm1_title">Phase 1 — Validation (M1-M3)</div>
+      <div class="module-desc" data-t="gtm1_desc">Tester avec 50 utilisateurs pilotes dans 2 écoles d'ingénieurs. Collecter les retours, affiner l'offre. Objectif : 80% de satisfaction et 1er cas d'usage documenté.</div>
+    </div>
+    <div class="module-card">
+      <div class="module-icon" style="background:var(--def-bg)">📣</div>
+      <div class="module-title" data-t="gtm2_title">Phase 2 — Lancement (M4-M6)</div>
+      <div class="module-desc" data-t="gtm2_desc">Lancement public avec campagne digitale ciblée. Partenariats avec 5 écoles et universités. Mise en place du modèle freemium. Objectif : 500 utilisateurs actifs.</div>
+    </div>
+    <div class="module-card">
+      <div class="module-icon" style="background:var(--ide-bg)">📈</div>
+      <div class="module-title" data-t="gtm3_title">Phase 3 — Croissance (M7-M12)</div>
+      <div class="module-desc" data-t="gtm3_desc">Expansion régionale au Maghreb. Intégration dans les cursus ingénieurs. Programme ambassadeurs étudiants. Objectif : 5 000 utilisateurs, 50 institutions partenaires.</div>
+    </div>
+    <div class="module-card">
+      <div class="module-icon" style="background:var(--tes-bg)">🌍</div>
+      <div class="module-title" data-t="gtm4_title">Phase 4 — Échelle (M13-M24)</div>
+      <div class="module-desc" data-t="gtm4_desc">Expansion Afrique francophone et Moyen-Orient. Version enterprise pour grandes organisations. Levée de fonds Série A. Objectif : 50 000 utilisateurs, rentabilité.</div>
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid rgba(245,158,11,0.2);border-radius:var(--radius);padding:1.5rem">
+    <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--biz);margin-bottom:12px">📊 <span data-t="metrics_title">Métriques clés à suivre</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px">
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--biz)">CAC</div>
+        <div style="font-size:12px;color:var(--muted)" data-t="m1">Coût d'acquisition client</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--tes)">LTV</div>
+        <div style="font-size:12px;color:var(--muted)" data-t="m2">Valeur vie client</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--def)">NPS</div>
+        <div style="font-size:12px;color:var(--muted)" data-t="m3">Score recommandation</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--emp)">MRR</div>
+        <div style="font-size:12px;color:var(--muted)" data-t="m4">Revenus récurrents mensuels</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--ide)">DAU</div>
+        <div style="font-size:12px;color:var(--muted)" data-t="m5">Utilisateurs actifs / jour</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:1rem;text-align:center">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--pro)">ROI</div>
+        <div style="font-size:12px;color:var(--muted)" data-t="m6">Retour sur investissement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOUR 4 -->
+<section id="sec-jour4" class="section">
+  <div class="day-hero" style="--accent-glow:rgba(236,72,153,0.08)">
+    <div class="day-badge" style="background:var(--pit-bg);color:var(--pit);border:1px solid rgba(236,72,153,0.2)">
+      📅 <span data-t="j4_badge">Jour 4</span>
+    </div>
+    <div class="day-title" data-t="j4_title">Pitch & Jury</div>
+    <div class="day-subtitle" data-t="j4_sub">Présenter votre projet de façon convaincante devant un jury d'experts. Structure, timing, narration et réponse aux questions.</div>
+  </div>
+
+  <div class="section-header" style="margin-top:1.5rem">
+    <h2 data-t="pitch_struct_title">Structure du pitch (10 minutes)</h2>
+    <p data-t="pitch_struct_sub">Le déroulé idéal pour capter et convaincre votre jury</p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-left"><div class="timeline-dot" style="background:var(--emp-bg);color:var(--emp)">🔥</div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-time" data-t="t1_time">0:00 – 1:00 min</div>
+        <div class="timeline-title" data-t="t1_title">Le Hook — Accrochez le jury</div>
+        <div class="timeline-desc" data-t="t1_desc">Ouvrez avec une statistique choc, une histoire vraie ou une question rhétorique. Ex : "Saviez-vous que 70% des projets technologiques échouent faute d'écouter l'utilisateur ?"</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"><div class="timeline-dot" style="background:var(--def-bg);color:var(--def)">🎯</div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-time" data-t="t2_time">1:00 – 2:30 min</div>
+        <div class="timeline-title" data-t="t2_title">Le Problème — Montrez la douleur</div>
+        <div class="timeline-desc" data-t="t2_desc">Présentez le problème réel identifié par votre démarche d'empathie. Données chiffrées + témoignage utilisateur. Rendez la douleur tangible et universelle.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"><div class="timeline-dot" style="background:var(--ide-bg);color:var(--ide)">💡</div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-time" data-t="t3_time">2:30 – 4:00 min</div>
+        <div class="timeline-title" data-t="t3_title">La Solution — Votre réponse unique</div>
+        <div class="timeline-desc" data-t="t3_desc">Présentez votre solution en 3 phrases max. Montrez une démo ou votre prototype. Expliquez en quoi vous êtes différent de l'existant.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"><div class="timeline-dot" style="background:var(--pro-bg);color:var(--pro)">📊</div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-time" data-t="t4_time">4:00 – 6:00 min</div>
+        <div class="timeline-title" data-t="t4_title">Le Business Model — Comment vous gagnez de l'argent</div>
+        <div class="timeline-desc" data-t="t4_desc">Expliquez clairement vos sources de revenus, votre marché adressable (TAM/SAM/SOM) et votre stratégie GTM en 2-3 points clés.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"><div class="timeline-dot" style="background:var(--tes-bg);color:var(--tes)">✅</div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-time" data-t="t5_time">6:00 – 8:00 min</div>
+        <div class="timeline-title" data-t="t5_title">La Traction — Preuves et validation</div>
+        <div class="timeline-desc" data-t="t5_desc">Résultats des tests utilisateurs, premiers clients, partenariats signés, lettres d'intention, chiffres de croissance. La traction est la preuve que ça marche.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left"><div class="timeline-dot" style="background:var(--pit-bg);color:var(--pit)">🚀</div></div>
+      <div class="timeline-content">
+        <div class="timeline-time" data-t="t6_time">8:00 – 10:00 min</div>
+        <div class="timeline-title" data-t="t6_title">L'Équipe & L'Appel à l'action</div>
+        <div class="timeline-desc" data-t="t6_desc">Présentez l'équipe et ses compétences clés. Terminez par un appel à l'action clair : "Nous cherchons un partenaire technique" ou "Nous levons 200k MAD pour..."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <h2 data-t="slides_title">Structure des slides recommandée</h2>
+    <p data-t="slides_sub">10 slides maximum — moins c'est plus</p>
+  </div>
+
+  <div class="slides-grid">
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 01<div class="slide-title" data-t="s1_title">Titre & Tagline</div><div class="slide-desc" data-t="s1_desc">Nom du projet, logo, tagline en 1 phrase</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 02<div class="slide-title" data-t="s2_title">Le Problème</div><div class="slide-desc" data-t="s2_desc">Stat + persona + citation utilisateur</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 03<div class="slide-title" data-t="s3_title">La Solution</div><div class="slide-desc" data-t="s3_desc">Visuel du prototype ou démo</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 04<div class="slide-title" data-t="s4_title">Démo / Prototype</div><div class="slide-desc" data-t="s4_desc">Screenshots ou vidéo courte (&lt;30s)</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 05<div class="slide-title" data-t="s5_title">Marché & Opportunité</div><div class="slide-desc" data-t="s5_desc">TAM / SAM / SOM chiffrés</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 06<div class="slide-title" data-t="s6_title">Business Model</div><div class="slide-desc" data-t="s6_desc">Sources de revenus + pricing</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 07<div class="slide-title" data-t="s7_title">Go-To-Market</div><div class="slide-desc" data-t="s7_desc">Stratégie d'acquisition clients</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 08<div class="slide-title" data-t="s8_title">Traction & Validation</div><div class="slide-desc" data-t="s8_desc">Tests, chiffres, retours terrain</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 09<div class="slide-title" data-t="s9_title">L'Équipe</div><div class="slide-desc" data-t="s9_desc">Photos + rôles + compétences clés</div></div>
+    <div class="slide-preview"><div class="slide-num" data-t="slide">Slide</div> 10<div class="slide-title" data-t="s10_title">Appel à l'action</div><div class="slide-desc" data-t="s10_desc">Ce dont vous avez besoin + contact</div></div>
+  </div>
+
+  <div class="section-header" style="margin-top:2rem">
+    <h2 data-t="jury_title">Critères d'évaluation du jury</h2>
+    <p data-t="jury_sub">Barème type utilisé dans les compétitions d'innovation</p>
+  </div>
+
+  <div class="jury-criteria">
+    <div class="criteria-row">
+      <div class="criteria-name">🎯 <span data-t="c1">Pertinence du problème</span></div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar" style="width:100%;background:var(--emp)"></div></div>
+      <div class="criteria-pts" style="color:var(--emp)">20 pts</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-name">💡 <span data-t="c2">Innovation de la solution</span></div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar" style="width:90%;background:var(--ide)"></div></div>
+      <div class="criteria-pts" style="color:var(--ide)">18 pts</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-name">📊 <span data-t="c3">Viabilité économique</span></div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar" style="width:85%;background:var(--biz)"></div></div>
+      <div class="criteria-pts" style="color:var(--biz)">17 pts</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-name">✅ <span data-t="c4">Validation / Traction</span></div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar" style="width:80%;background:var(--tes)"></div></div>
+      <div class="criteria-pts" style="color:var(--tes)">16 pts</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-name">🎤 <span data-t="c5">Qualité de présentation</span></div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar" style="width:75%;background:var(--def)"></div></div>
+      <div class="criteria-pts" style="color:var(--def)">15 pts</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-name">👥 <span data-t="c6">Compétences de l'équipe</span></div>
+      <div class="criteria-bar-wrap"><div class="criteria-bar" style="width:70%;background:var(--pro)"></div></div>
+      <div class="criteria-pts" style="color:var(--pro)">14 pts</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:1.5rem">
+    <h2 data-t="tips_title">Conseils pour convaincre le jury</h2>
+    <p data-t="tips_sub">Les erreurs à éviter et les bonnes pratiques</p>
+  </div>
+
+  <div class="pitch-tips">
+    <div class="tip-card"><div class="tip-icon">⏱️</div><div><div class="tip-title" data-t="tip1t">Respectez le timing</div><div class="tip-desc" data-t="tip1d">Entraînez-vous 3 fois avec chronomètre. Dépasser le temps pénalise directement votre score jury.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">📖</div><div><div class="tip-title" data-t="tip2t">Racontez une histoire</div><div class="tip-desc" data-t="tip2d">Commencez par un personnage réel (votre persona). Le jury doit ressentir le problème avant votre solution.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🔢</div><div><div class="tip-title" data-t="tip3t">Données chiffrées</div><div class="tip-desc" data-t="tip3d">Chaque affirmation doit être soutenue par un chiffre. "Beaucoup" ne convainc pas, "73% des utilisateurs" oui.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🤔</div><div><div class="tip-title" data-t="tip4t">Anticipez les questions</div><div class="tip-desc" data-t="tip4d">Préparez des réponses à : "Pourquoi vous ?", "Quel est votre avantage concurrentiel ?", "Quel est votre plan B ?"</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🚫</div><div><div class="tip-title" data-t="tip5t">Évitez le jargon</div><div class="tip-desc" data-t="tip5d">Parlez comme si vous expliquez à un ami intelligent non spécialiste. Clarté > complexité technique.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">💪</div><div><div class="tip-title" data-t="tip6t">Montrez votre passion</div><div class="tip-desc" data-t="tip6d">Le jury finance des équipes autant que des idées. Votre énergie et conviction sont des critères d'évaluation.</div></div></div>
   </div>
 </section>
 
@@ -574,31 +616,33 @@
 <section id="sec-projet" class="section">
   <div class="project-wrap">
     <div class="section-header">
-      <h2>Mon projet</h2>
-      <p>Appliquez la méthode à votre propre projet d'ingénierie</p>
+      <h2 data-t="proj_title">Mon projet</h2>
+      <p data-t="proj_sub">Appliquez la méthode complète à votre propre projet d'ingénierie</p>
     </div>
     <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem">
       <div class="form-group">
-        <div class="form-label"><span>01</span> Qui est votre utilisateur cible ?</div>
-        <textarea id="pj-user" placeholder="Décrivez votre utilisateur : profil, contexte, besoins, frustrations quotidiennes..."></textarea>
+        <div class="form-label"><span>01</span> <span data-t="pj1">Qui est votre utilisateur cible ?</span></div>
+        <textarea id="pj-user" data-placeholder-t="pj1_ph" placeholder="Décrivez votre utilisateur : profil, contexte, besoins, frustrations quotidiennes..."></textarea>
       </div>
       <div class="form-group">
-        <div class="form-label"><span>02</span> Quel est le problème central ?</div>
+        <div class="form-label"><span>02</span> <span data-t="pj2">Quel est le problème central ?</span></div>
         <textarea id="pj-problem" placeholder="[Utilisateur] a besoin de [besoin] parce que [insight]..."></textarea>
       </div>
       <div class="form-group">
-        <div class="form-label"><span>03</span> Vos 3 meilleures idées</div>
+        <div class="form-label"><span>03</span> <span data-t="pj3">Vos 3 meilleures idées</span></div>
         <textarea id="pj-ideas" placeholder="Idée 1 : ...&#10;Idée 2 : ...&#10;Idée 3 : ..."></textarea>
       </div>
       <div class="form-group">
-        <div class="form-label"><span>04</span> Type de prototype envisagé</div>
-        <textarea id="pj-proto" placeholder="Maquette papier, wireframe Figma, application web, chatbot, dashboard..."></textarea>
+        <div class="form-label"><span>04</span> <span data-t="pj4">Business Model envisagé</span></div>
+        <textarea id="pj-bm" placeholder="Sources de revenus, segments clients, proposition de valeur..."></textarea>
       </div>
-      <div id="pj-saved" style="display:none;margin-bottom:12px;padding:10px 14px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);border-radius:var(--radius-sm);font-size:13px;color:var(--tes)">
-        ✓ Projet sauvegardé dans cette session
+      <div class="form-group">
+        <div class="form-label"><span>05</span> <span data-t="pj5">Structure de votre pitch</span></div>
+        <textarea id="pj-pitch" placeholder="Hook, problème, solution, BM, traction, équipe..."></textarea>
       </div>
+      <div id="pj-saved" style="display:none;margin-bottom:12px;padding:10px 14px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);border-radius:var(--radius-sm);font-size:13px;color:var(--tes)" data-t="saved_msg">✓ Projet sauvegardé dans cette session</div>
       <div class="btn-row">
-        <button class="btn primary" onclick="saveProject()">Sauvegarder</button>
+        <button class="btn primary" onclick="saveProject()" data-t="save_btn">Sauvegarder</button>
       </div>
     </div>
   </div>
@@ -607,164 +651,312 @@
 </main>
 
 <script>
-const STEPS = [
-  {
-    key:"emp", color:"var(--emp)", bg:"var(--emp-bg)",
-    icon:"❤️", num:"01",
-    label:"Étape 1",
-    name:"Empathie",
-    desc:"Observer, interviewer et se mettre à la place de l'utilisateur pour découvrir ses besoins réels, ses frustrations et ses attentes cachées.",
-    example:"Projet formation IA rurale : accès Internet, niveau numérique, langue dominante, contraintes matérielles.",
-    tools:["Interviews","Observation terrain","Carte d'empathie","Personas","Journal de bord"]
+// ======================== TRANSLATIONS ========================
+const T = {
+  fr:{
+    nav_accueil:"Accueil",nav_quiz:"Quiz",nav_badges:"Badges",nav_cas:"Cas",nav_comparer:"Comparer",nav_jour3:"Jour 3",nav_jour4:"Jour 4",nav_projet:"Mon projet",
+    hero_badge:"Plateforme pédagogique · Élèves ingénieurs",hero_title:"Design Thinking<br>Interactif",hero_sub:"Maîtrisez les 5 étapes de la méthode centrée utilisateur. Quiz, badges, cas réels d'ingénierie.",
+    step1_name:"Empathie",step2_name:"Définition",step3_name:"Idéation",step4_name:"Prototype",step5_name:"Test",
+    score_label:"Score",stat_pts:"Points accumulés",stat_badges:"Badges débloqués",stat_correct:"Questions réussies",stat_qs:"Questions disponibles →",
+    quiz_title:"Quiz Design Thinking",quiz_sub:"8 questions contextualisées — DT, Business Model & Pitch",
+    badges_title:"Mes badges",badges_sub:"Débloqués en réussissant les questions du quiz",
+    cas_title:"Études de cas",cas_sub:"Projets réels d'ingénierie appliqués au Design Thinking",
+    compare_title:"Design Thinking vs Lean Startup",compare_sub:"Deux approches complémentaires pour l'innovation",
+    dt_approach:"Approche centrée utilisateur",lean_approach:"Validation économique rapide",focus:"Focus principal",objectif:"Objectif",prototype:"Prototype",iteration:"Itération",
+    dt_focus:"Besoins et émotions humains",dt_obj:"Innovation créative et UX",dt_proto:"Maquettes et tests qualitatifs",dt_iter:"Retours utilisateurs riches",
+    lean_focus:"Viabilité du modèle économique",lean_obj:"Optimisation et métriques",lean_proto:"MVP — version minimale fonctionnelle",lean_iter:"A/B tests, analytics, data-driven",
+    combine_title:"En pratique, les deux se combinent",combine_desc:"Le Design Thinking permet de comprendre le besoin humain. Le Lean Startup valide la viabilité économique avec un MVP. Cette combinaison est le standard des projets technologiques innovants.",
+    j3_badge:"Jour 3",j3_title:"Business Model & Go-To-Market",j3_sub:"Transformer votre solution Design Thinking en un modèle économique viable et une stratégie de mise sur le marché concrète.",
+    bmc_title:"Business Model Canvas",bmc_sub:"Les 9 blocs fondamentaux pour décrire votre modèle économique",
+    bmc_partners:"Partenaires clés",bmc_partners_desc:"Universités, startups tech, collectivités locales, investisseurs, fournisseurs stratégiques",
+    bmc_activities:"Activités clés",bmc_activities_desc:"Développement produit, formation utilisateurs, R&D, support client",
+    bmc_value:"Proposition de valeur",bmc_value_desc:"Solution unique centrée sur l'utilisateur. Résout un problème réel validé par la démarche DT. Accessible, scalable, différenciée.",
+    bmc_relation:"Relation client",bmc_relation_desc:"Support personnalisé, communauté, self-service, abonnement",
+    bmc_segments:"Segments clients",bmc_segments_desc:"Étudiants ingénieurs, PME marocaines, collectivités, startups innovantes, secteur éducatif",
+    bmc_resources:"Ressources clés",bmc_resources_desc:"Équipe technique, IP / brevets, données utilisateurs, infrastructure cloud",
+    bmc_channels:"Canaux",bmc_channels_desc:"Plateforme web, appli mobile, réseaux sociaux, partenaires académiques",
+    bmc_costs:"Structure de coûts",bmc_costs_desc:"Développement & infrastructure (40%) · Équipe & RH (35%) · Marketing & acquisition (15%) · Opérations (10%)",
+    bmc_revenue:"Sources de revenus",bmc_revenue_desc:"Abonnement SaaS · Licences institutionnelles · Formation certifiante · API & intégrations · Freemium → Premium",
+    gtm_title:"Stratégie Go-To-Market (GTM)",gtm_sub:"Plan de lancement en 4 phases pour atteindre votre marché cible",
+    gtm1_title:"Phase 1 — Validation (M1-M3)",gtm1_desc:"Tester avec 50 utilisateurs pilotes dans 2 écoles d'ingénieurs. Objectif : 80% de satisfaction et 1er cas d'usage documenté.",
+    gtm2_title:"Phase 2 — Lancement (M4-M6)",gtm2_desc:"Lancement public avec campagne digitale ciblée. 5 partenariats académiques. Objectif : 500 utilisateurs actifs.",
+    gtm3_title:"Phase 3 — Croissance (M7-M12)",gtm3_desc:"Expansion régionale Maghreb. Programme ambassadeurs étudiants. Objectif : 5 000 utilisateurs, 50 institutions.",
+    gtm4_title:"Phase 4 — Échelle (M13-M24)",gtm4_desc:"Expansion Afrique francophone et Moyen-Orient. Levée de fonds Série A. Objectif : 50 000 utilisateurs.",
+    metrics_title:"Métriques clés à suivre",m1:"Coût d'acquisition client",m2:"Valeur vie client",m3:"Score recommandation",m4:"Revenus récurrents mensuels",m5:"Utilisateurs actifs / jour",m6:"Retour sur investissement",
+    j4_badge:"Jour 4",j4_title:"Pitch & Jury",j4_sub:"Présenter votre projet de façon convaincante devant un jury d'experts. Structure, timing, narration et réponse aux questions.",
+    pitch_struct_title:"Structure du pitch (10 minutes)",pitch_struct_sub:"Le déroulé idéal pour capter et convaincre votre jury",
+    t1_time:"0:00 – 1:00 min",t1_title:"Le Hook — Accrochez le jury",t1_desc:"Ouvrez avec une statistique choc ou une histoire vraie. Ex : \"70% des projets tech échouent faute d'écouter l'utilisateur.\"",
+    t2_time:"1:00 – 2:30 min",t2_title:"Le Problème — Montrez la douleur",t2_desc:"Données chiffrées + témoignage utilisateur. Rendez la douleur tangible et universelle.",
+    t3_time:"2:30 – 4:00 min",t3_title:"La Solution — Votre réponse unique",t3_desc:"Solution en 3 phrases max. Démo ou prototype. Ce qui vous différencie de l'existant.",
+    t4_time:"4:00 – 6:00 min",t4_title:"Le Business Model — Comment vous gagnez de l'argent",t4_desc:"Sources de revenus, marché adressable TAM/SAM/SOM, stratégie GTM en 2-3 points clés.",
+    t5_time:"6:00 – 8:00 min",t5_title:"La Traction — Preuves et validation",t5_desc:"Résultats tests utilisateurs, premiers clients, partenariats signés. La traction prouve que ça marche.",
+    t6_time:"8:00 – 10:00 min",t6_title:"L'Équipe & L'Appel à l'action",t6_desc:"Équipe et compétences clés. Terminez par un appel à l'action clair et mémorable.",
+    slides_title:"Structure des slides recommandée",slides_sub:"10 slides maximum — moins c'est plus",
+    slide:"Slide",s1_title:"Titre & Tagline",s1_desc:"Nom, logo, tagline 1 phrase",s2_title:"Le Problème",s2_desc:"Stat + persona + citation",s3_title:"La Solution",s3_desc:"Visuel prototype ou démo",s4_title:"Démo / Prototype",s4_desc:"Screenshots ou vidéo &lt;30s",s5_title:"Marché & Opportunité",s5_desc:"TAM / SAM / SOM chiffrés",s6_title:"Business Model",s6_desc:"Revenus + pricing",s7_title:"Go-To-Market",s7_desc:"Stratégie acquisition",s8_title:"Traction & Validation",s8_desc:"Tests, chiffres, terrain",s9_title:"L'Équipe",s9_desc:"Photos + rôles + compétences",s10_title:"Appel à l'action",s10_desc:"Besoin + contact",
+    jury_title:"Critères d'évaluation du jury",jury_sub:"Barème type utilisé dans les compétitions d'innovation",
+    c1:"Pertinence du problème",c2:"Innovation de la solution",c3:"Viabilité économique",c4:"Validation / Traction",c5:"Qualité de présentation",c6:"Compétences de l'équipe",
+    tips_title:"Conseils pour convaincre le jury",tips_sub:"Les erreurs à éviter et les bonnes pratiques",
+    tip1t:"Respectez le timing",tip1d:"Entraînez-vous 3 fois avec chronomètre. Dépasser le temps pénalise votre score.",
+    tip2t:"Racontez une histoire",tip2d:"Commencez par votre persona réel. Le jury doit ressentir le problème avant la solution.",
+    tip3t:"Données chiffrées",tip3d:"Chaque affirmation doit être soutenue par un chiffre. \"73% des utilisateurs\" pas \"beaucoup\".",
+    tip4t:"Anticipez les questions",tip4d:"Préparez : \"Pourquoi vous ?\", \"Avantage concurrentiel ?\", \"Plan B ?\"",
+    tip5t:"Évitez le jargon",tip5d:"Parlez comme si vous expliquez à un ami intelligent non spécialiste.",
+    tip6t:"Montrez votre passion",tip6d:"Le jury finance des équipes autant que des idées. Votre conviction est un critère.",
+    proj_title:"Mon projet",proj_sub:"Appliquez la méthode complète à votre propre projet d'ingénierie",
+    pj1:"Qui est votre utilisateur cible ?",pj2:"Quel est le problème central ?",pj3:"Vos 3 meilleures idées",pj4:"Business Model envisagé",pj5:"Structure de votre pitch",
+    save_btn:"Sauvegarder",saved_msg:"✓ Projet sauvegardé dans cette session",
+    correct_msg:"Correct ! +10 points",wrong_msg:"Incorrect",next_q:"Question suivante →",see_score:"Voir mon score →",restart:"Recommencer",see_badges:"Voir mes badges",
+    pts_lbl:"Points",replies_lbl:"Réussies",badges_lbl:"Badges",
   },
-  {
-    key:"def", color:"var(--def)", bg:"var(--def-bg)",
-    icon:"🎯", num:"02",
-    label:"Étape 2",
-    name:"Définition",
-    desc:"Synthétiser les données collectées pour formuler un problème central précis, orienté utilisateur, qui guidera tout le processus.",
-    example:'"Ahmed, étudiant en GI, a besoin d\'accéder aux ressources hors ligne parce que le campus a une connexion instable."',
-    tools:["POV statement","Diagramme d'affinité","HMW questions","Arbre des problèmes"]
+  ar:{
+    nav_accueil:"الرئيسية",nav_quiz:"اختبار",nav_badges:"شارات",nav_cas:"دراسات الحالة",nav_comparer:"مقارنة",nav_jour3:"اليوم 3",nav_jour4:"اليوم 4",nav_projet:"مشروعي",
+    hero_badge:"منصة تعليمية · طلاب الهندسة",hero_title:"التفكير التصميمي<br>التفاعلي",hero_sub:"أتقن المراحل الخمس للمنهجية المتمحورة حول المستخدم. اختبارات وشارات وحالات هندسية حقيقية.",
+    step1_name:"التعاطف",step2_name:"التعريف",step3_name:"الابتكار",step4_name:"النموذج الأولي",step5_name:"الاختبار",
+    score_label:"النتيجة",stat_pts:"النقاط المتراكمة",stat_badges:"الشارات المحققة",stat_correct:"الأسئلة الصحيحة",stat_qs:"الأسئلة المتاحة ←",
+    quiz_title:"اختبار التفكير التصميمي",quiz_sub:"8 أسئلة سياقية — التفكير التصميمي، نموذج الأعمال والعرض",
+    badges_title:"شاراتي",badges_sub:"تُفتح عند إجابة أسئلة الاختبار بشكل صحيح",
+    cas_title:"دراسات الحالة",cas_sub:"مشاريع هندسية حقيقية تطبق التفكير التصميمي",
+    compare_title:"التفكير التصميمي مقابل الشركة الناشئة الرشيقة",compare_sub:"نهجان متكاملان للابتكار",
+    dt_approach:"نهج متمحور حول المستخدم",lean_approach:"التحقق الاقتصادي السريع",focus:"التركيز الرئيسي",objectif:"الهدف",prototype:"النموذج الأولي",iteration:"التكرار",
+    dt_focus:"الاحتياجات والمشاعر الإنسانية",dt_obj:"الابتكار الإبداعي وتجربة المستخدم",dt_proto:"نماذج أولية واختبارات نوعية",dt_iter:"تغذية راجعة غنية من المستخدمين",
+    lean_focus:"جدوى النموذج الاقتصادي",lean_obj:"التحسين والمقاييس",lean_proto:"MVP — الحد الأدنى من المنتج",lean_iter:"اختبارات A/B، تحليلات، بيانات",
+    combine_title:"في الممارسة، يتكاملان معاً",combine_desc:"يساعد التفكير التصميمي على فهم الحاجة الإنسانية. تتحقق الشركة الناشئة الرشيقة من الجدوى الاقتصادية. هذا المزيج هو المعيار في مشاريع التكنولوجيا.",
+    j3_badge:"اليوم 3",j3_title:"نموذج الأعمال والذهاب إلى السوق",j3_sub:"تحويل حل التفكير التصميمي إلى نموذج اقتصادي قابل للتطبيق واستراتيجية سوقية ملموسة.",
+    bmc_title:"مخطط نموذج الأعمال",bmc_sub:"التسعة بنود الأساسية لوصف نموذجك الاقتصادي",
+    bmc_partners:"الشركاء الرئيسيون",bmc_partners_desc:"جامعات، شركات تقنية، جماعات محلية، مستثمرون، موردون استراتيجيون",
+    bmc_activities:"الأنشطة الرئيسية",bmc_activities_desc:"تطوير المنتج، تدريب المستخدمين، البحث والتطوير، دعم العملاء",
+    bmc_value:"القيمة المقترحة",bmc_value_desc:"حل فريد متمحور حول المستخدم. يحل مشكلة حقيقية مُتحقق منها بمنهجية التفكير التصميمي.",
+    bmc_relation:"علاقة العميل",bmc_relation_desc:"دعم شخصي، مجتمع، خدمة ذاتية، اشتراك",
+    bmc_segments:"شرائح العملاء",bmc_segments_desc:"طلاب الهندسة، المؤسسات الصغيرة المغربية، الجماعات، الشركات الناشئة، القطاع التعليمي",
+    bmc_resources:"الموارد الرئيسية",bmc_resources_desc:"الفريق التقني، الملكية الفكرية، بيانات المستخدمين، البنية التحتية السحابية",
+    bmc_channels:"القنوات",bmc_channels_desc:"منصة ويب، تطبيق موبايل، شبكات اجتماعية، شراكات أكاديمية",
+    bmc_costs:"هيكل التكاليف",bmc_costs_desc:"التطوير والبنية التحتية (40%) · الفريق (35%) · التسويق (15%) · العمليات (10%)",
+    bmc_revenue:"مصادر الدخل",bmc_revenue_desc:"اشتراك SaaS · تراخيص مؤسسية · تكوين معتمد · API وتكاملات · Freemium → Premium",
+    gtm_title:"استراتيجية الذهاب إلى السوق",gtm_sub:"خطة إطلاق في 4 مراحل للوصول إلى السوق المستهدف",
+    gtm1_title:"المرحلة 1 — التحقق (ش1-ش3)",gtm1_desc:"اختبار مع 50 مستخدماً تجريبياً في مدرستين للمهندسين. هدف: 80% رضا.",
+    gtm2_title:"المرحلة 2 — الإطلاق (ش4-ش6)",gtm2_desc:"إطلاق عام بحملة رقمية مستهدفة. 5 شراكات أكاديمية. هدف: 500 مستخدم نشط.",
+    gtm3_title:"المرحلة 3 — النمو (ش7-ش12)",gtm3_desc:"التوسع في المغرب العربي. برنامج سفراء الطلاب. هدف: 5000 مستخدم.",
+    gtm4_title:"المرحلة 4 — التوسع (ش13-ش24)",gtm4_desc:"التوسع في أفريقيا والشرق الأوسط. جولة تمويل. هدف: 50,000 مستخدم.",
+    metrics_title:"المقاييس الرئيسية",m1:"تكلفة اكتساب العميل",m2:"قيمة عمر العميل",m3:"نقاط التوصية",m4:"الإيرادات الشهرية المتكررة",m5:"المستخدمون النشطون / يوم",m6:"العائد على الاستثمار",
+    j4_badge:"اليوم 4",j4_title:"العرض والتحكيم",j4_sub:"تقديم مشروعك بشكل مقنع أمام لجنة من الخبراء. الهيكل والتوقيت والسرد والإجابة على الأسئلة.",
+    pitch_struct_title:"هيكل العرض (10 دقائق)",pitch_struct_sub:"التسلسل المثالي للإمساك باهتمام لجنة التحكيم وإقناعها",
+    t1_time:"0:00 – 1:00 د",t1_title:"الافتتاحية — استقطب اللجنة",t1_desc:"افتح بإحصائية صادمة أو قصة حقيقية. مثال: «70% من المشاريع التقنية تفشل لعدم الاستماع للمستخدم»",
+    t2_time:"1:00 – 2:30 د",t2_title:"المشكلة — أظهر الألم",t2_desc:"بيانات مرقمة + شهادة مستخدم. اجعل المشكلة ملموسة وعالمية.",
+    t3_time:"2:30 – 4:00 د",t3_title:"الحل — إجابتك الفريدة",t3_desc:"الحل في 3 جمل كحد أقصى. عرض توضيحي أو نموذج أولي. ما يميزك عن الموجود.",
+    t4_time:"4:00 – 6:00 د",t4_title:"نموذج الأعمال — كيف تكسب المال",t4_desc:"مصادر الإيرادات، السوق المستهدف TAM/SAM/SOM، استراتيجية GTM في 2-3 نقاط.",
+    t5_time:"6:00 – 8:00 د",t5_title:"الزخم — الأدلة والتحقق",t5_desc:"نتائج اختبارات المستخدمين، أول عملاء، شراكات موقعة. الزخم يثبت أن الفكرة تنجح.",
+    t6_time:"8:00 – 10:00 د",t6_title:"الفريق ونداء العمل",t6_desc:"الفريق والكفاءات الرئيسية. اختتم بنداء عمل واضح ولا يُنسى.",
+    slides_title:"هيكل الشرائح الموصى به",slides_sub:"10 شرائح كحد أقصى — الأقل هو الأكثر",
+    slide:"شريحة",s1_title:"العنوان والشعار",s1_desc:"الاسم، الشعار، شعار بجملة واحدة",s2_title:"المشكلة",s2_desc:"إحصائية + شخصية + اقتباس",s3_title:"الحل",s3_desc:"مرئيات النموذج الأولي",s4_title:"عرض توضيحي",s4_desc:"لقطات شاشة أو فيديو &lt;30ث",s5_title:"السوق والفرصة",s5_desc:"TAM / SAM / SOM بأرقام",s6_title:"نموذج الأعمال",s6_desc:"مصادر الدخل + التسعير",s7_title:"الذهاب للسوق",s7_desc:"استراتيجية اكتساب العملاء",s8_title:"الزخم والتحقق",s8_desc:"اختبارات، أرقام، ميدان",s9_title:"الفريق",s9_desc:"صور + أدوار + كفاءات",s10_title:"نداء العمل",s10_desc:"ما تحتاجه + التواصل",
+    jury_title:"معايير تقييم لجنة التحكيم",jury_sub:"النظام المعتمد في مسابقات الابتكار",
+    c1:"صلة المشكلة",c2:"ابتكار الحل",c3:"الجدوى الاقتصادية",c4:"التحقق والزخم",c5:"جودة التقديم",c6:"كفاءات الفريق",
+    tips_title:"نصائح لإقناع لجنة التحكيم",tips_sub:"الأخطاء التي يجب تجنبها وأفضل الممارسات",
+    tip1t:"احترم التوقيت",tip1d:"تدرب 3 مرات بمؤقت. تجاوز الوقت يعاقبك مباشرة.",
+    tip2t:"احكِ قصة",tip2d:"ابدأ بشخصية حقيقية. يجب أن تشعر اللجنة بالمشكلة قبل الحل.",
+    tip3t:"أرقام وبيانات",tip3d:"كل ادعاء يجب دعمه برقم. «73% من المستخدمين» لا «كثيرون».",
+    tip4t:"توقع الأسئلة",tip4d:"جهّز إجابات: «لماذا أنتم؟»، «ما ميزتكم التنافسية؟»، «خطتكم البديلة؟»",
+    tip5t:"تجنب المصطلحات التقنية",tip5d:"تكلم كما لو تشرح لصديق ذكي غير متخصص. الوضوح > التعقيد.",
+    tip6t:"أظهر شغفك",tip6d:"اللجنة تموّل فرقاً بقدر ما تموّل أفكاراً. حماسك معيار تقييم.",
+    proj_title:"مشروعي",proj_sub:"طبّق المنهجية الكاملة على مشروعك الهندسي الخاص",
+    pj1:"من هو المستخدم المستهدف؟",pj2:"ما هي المشكلة المحورية؟",pj3:"أفضل 3 أفكار لديك",pj4:"نموذج الأعمال المقترح",pj5:"هيكل عرضك التقديمي",
+    save_btn:"حفظ",saved_msg:"✓ تم حفظ المشروع في هذه الجلسة",
+    correct_msg:"صحيح! +10 نقاط",wrong_msg:"خطأ",next_q:"السؤال التالي ←",see_score:"عرض نتيجتي ←",restart:"إعادة البدء",see_badges:"عرض شاراتي",
+    pts_lbl:"نقطة",replies_lbl:"صحيحة",badges_lbl:"شارات",
   },
-  {
-    key:"ide", color:"var(--ide)", bg:"var(--ide-bg)",
-    icon:"🧠", num:"03",
-    label:"Étape 3",
-    name:"Idéation",
-    desc:"Explorer librement toutes les solutions possibles sans jugement. La quantité prime sur la qualité pour stimuler la créativité.",
-    example:"Atelier 2h → 45 idées → vote → top 3 → approfondissement avec le client.",
-    tools:["Brainstorming","Mind mapping","SCAMPER","Worst Possible Idea","Atelier collaboratif"]
-  },
-  {
-    key:"pro", color:"var(--pro)", bg:"var(--pro-bg)",
-    icon:"🔧", num:"04",
-    label:"Étape 4",
-    name:"Prototype",
-    desc:"Construire des représentations rapides et peu coûteuses des idées retenues pour les rendre testables. Apprendre, pas perfectionner.",
-    example:"Maquette papier du dashboard + Arduino simulant 3 capteurs → testé en 2 jours.",
-    tools:["Maquette papier","Wireframes Figma","Storyboard","MVP numérique","Prototype physique"]
-  },
-  {
-    key:"tes", color:"var(--tes)", bg:"var(--tes-bg)",
-    icon:"🧪", num:"05",
-    label:"Étape 5",
-    name:"Test",
-    desc:"Soumettre le prototype aux utilisateurs réels pour observer leurs réactions, recueillir leurs retours et identifier ce qui doit être amélioré.",
-    example:"Test pilote 10 utilisateurs → retours qualitatifs → itération → amélioration navigation -40% erreurs.",
-    tools:["Tests utilisateurs","Think-aloud","Grille d'évaluation","Heatmaps","Plan d'itération"]
+  en:{
+    nav_accueil:"Home",nav_quiz:"Quiz",nav_badges:"Badges",nav_cas:"Cases",nav_comparer:"Compare",nav_jour3:"Day 3",nav_jour4:"Day 4",nav_projet:"My Project",
+    hero_badge:"Educational Platform · Engineering Students",hero_title:"Interactive<br>Design Thinking",hero_sub:"Master the 5 steps of the user-centered methodology. Quiz, badges, real engineering case studies.",
+    step1_name:"Empathy",step2_name:"Define",step3_name:"Ideate",step4_name:"Prototype",step5_name:"Test",
+    score_label:"Score",stat_pts:"Points earned",stat_badges:"Badges unlocked",stat_correct:"Questions passed",stat_qs:"Questions available →",
+    quiz_title:"Design Thinking Quiz",quiz_sub:"8 contextual questions — DT, Business Model & Pitch",
+    badges_title:"My Badges",badges_sub:"Unlocked by answering quiz questions correctly",
+    cas_title:"Case Studies",cas_sub:"Real engineering projects applying Design Thinking",
+    compare_title:"Design Thinking vs Lean Startup",compare_sub:"Two complementary approaches to innovation",
+    dt_approach:"User-centered approach",lean_approach:"Rapid economic validation",focus:"Main focus",objectif:"Objective",prototype:"Prototype",iteration:"Iteration",
+    dt_focus:"Human needs and emotions",dt_obj:"Creative innovation and UX",dt_proto:"Mockups and qualitative tests",dt_iter:"Rich user feedback",
+    lean_focus:"Business model viability",lean_obj:"Optimization and metrics",lean_proto:"MVP — minimum viable product",lean_iter:"A/B tests, analytics, data-driven",
+    combine_title:"In practice, both combine",combine_desc:"Design Thinking helps understand human needs. Lean Startup validates economic viability with an MVP. This combination is the standard for innovative tech projects.",
+    j3_badge:"Day 3",j3_title:"Business Model & Go-To-Market",j3_sub:"Transform your Design Thinking solution into a viable business model and a concrete go-to-market strategy.",
+    bmc_title:"Business Model Canvas",bmc_sub:"The 9 fundamental blocks to describe your business model",
+    bmc_partners:"Key Partners",bmc_partners_desc:"Universities, tech startups, local authorities, investors, strategic suppliers",
+    bmc_activities:"Key Activities",bmc_activities_desc:"Product development, user training, R&D, customer support",
+    bmc_value:"Value Proposition",bmc_value_desc:"Unique user-centered solution. Solves a real problem validated by DT methodology. Accessible, scalable, differentiated.",
+    bmc_relation:"Customer Relationships",bmc_relation_desc:"Personalized support, community, self-service, subscription",
+    bmc_segments:"Customer Segments",bmc_segments_desc:"Engineering students, Moroccan SMEs, local authorities, innovative startups, education sector",
+    bmc_resources:"Key Resources",bmc_resources_desc:"Tech team, IP / patents, user data, cloud infrastructure",
+    bmc_channels:"Channels",bmc_channels_desc:"Web platform, mobile app, social networks, academic partners",
+    bmc_costs:"Cost Structure",bmc_costs_desc:"Development & infrastructure (40%) · Team & HR (35%) · Marketing & acquisition (15%) · Operations (10%)",
+    bmc_revenue:"Revenue Streams",bmc_revenue_desc:"SaaS subscription · Institutional licenses · Certified training · API & integrations · Freemium → Premium",
+    gtm_title:"Go-To-Market Strategy",gtm_sub:"4-phase launch plan to reach your target market",
+    gtm1_title:"Phase 1 — Validation (M1-M3)",gtm1_desc:"Test with 50 pilot users in 2 engineering schools. Target: 80% satisfaction and first documented use case.",
+    gtm2_title:"Phase 2 — Launch (M4-M6)",gtm2_desc:"Public launch with targeted digital campaign. 5 academic partnerships. Target: 500 active users.",
+    gtm3_title:"Phase 3 — Growth (M7-M12)",gtm3_desc:"Regional expansion to Maghreb. Student ambassador program. Target: 5,000 users, 50 institutions.",
+    gtm4_title:"Phase 4 — Scale (M13-M24)",gtm4_desc:"Expansion to Francophone Africa and Middle East. Series A fundraising. Target: 50,000 users.",
+    metrics_title:"Key Metrics to Track",m1:"Customer acquisition cost",m2:"Customer lifetime value",m3:"Net promoter score",m4:"Monthly recurring revenue",m5:"Daily active users",m6:"Return on investment",
+    j4_badge:"Day 4",j4_title:"Pitch & Jury",j4_sub:"Present your project convincingly to a panel of experts. Structure, timing, storytelling and Q&A.",
+    pitch_struct_title:"Pitch Structure (10 minutes)",pitch_struct_sub:"The ideal flow to capture and convince your jury",
+    t1_time:"0:00 – 1:00 min",t1_title:"The Hook — Grab the jury",t1_desc:"Open with a shocking statistic or true story. Ex: \"70% of tech projects fail because they don't listen to users.\"",
+    t2_time:"1:00 – 2:30 min",t2_title:"The Problem — Show the pain",t2_desc:"Data + user testimonial. Make the pain tangible and universal.",
+    t3_time:"2:30 – 4:00 min",t3_title:"The Solution — Your unique answer",t3_desc:"Solution in 3 sentences max. Demo or prototype. What makes you different.",
+    t4_time:"4:00 – 6:00 min",t4_title:"Business Model — How you make money",t4_desc:"Revenue streams, addressable market TAM/SAM/SOM, GTM strategy in 2-3 key points.",
+    t5_time:"6:00 – 8:00 min",t5_title:"Traction — Evidence and validation",t5_desc:"User test results, first customers, signed partnerships. Traction proves it works.",
+    t6_time:"8:00 – 10:00 min",t6_title:"Team & Call to Action",t6_desc:"Team and key skills. End with a clear and memorable call to action.",
+    slides_title:"Recommended Slide Structure",slides_sub:"10 slides maximum — less is more",
+    slide:"Slide",s1_title:"Title & Tagline",s1_desc:"Name, logo, 1-sentence tagline",s2_title:"The Problem",s2_desc:"Stat + persona + quote",s3_title:"The Solution",s3_desc:"Prototype visual or demo",s4_title:"Demo / Prototype",s4_desc:"Screenshots or video &lt;30s",s5_title:"Market & Opportunity",s5_desc:"TAM / SAM / SOM numbers",s6_title:"Business Model",s6_desc:"Revenue streams + pricing",s7_title:"Go-To-Market",s7_desc:"Customer acquisition strategy",s8_title:"Traction & Validation",s8_desc:"Tests, numbers, field results",s9_title:"The Team",s9_desc:"Photos + roles + key skills",s10_title:"Call to Action",s10_desc:"What you need + contact",
+    jury_title:"Jury Evaluation Criteria",jury_sub:"Standard scoring used in innovation competitions",
+    c1:"Problem relevance",c2:"Solution innovation",c3:"Economic viability",c4:"Validation / Traction",c5:"Presentation quality",c6:"Team skills",
+    tips_title:"Tips to Convince the Jury",tips_sub:"Mistakes to avoid and best practices",
+    tip1t:"Respect timing",tip1d:"Practice 3 times with a stopwatch. Going over time directly penalizes your score.",
+    tip2t:"Tell a story",tip2d:"Start with your real persona. The jury must feel the problem before your solution.",
+    tip3t:"Use numbers",tip3d:"Every claim must be backed by a number. \"73% of users\" not \"many\".",
+    tip4t:"Anticipate questions",tip4d:"Prepare: \"Why you?\", \"Competitive advantage?\", \"Plan B?\"",
+    tip5t:"Avoid jargon",tip5d:"Talk as if explaining to an intelligent non-specialist friend. Clarity > technical complexity.",
+    tip6t:"Show your passion",tip6d:"The jury funds teams as much as ideas. Your conviction is an evaluation criterion.",
+    proj_title:"My Project",proj_sub:"Apply the full methodology to your own engineering project",
+    pj1:"Who is your target user?",pj2:"What is the core problem?",pj3:"Your 3 best ideas",pj4:"Envisioned Business Model",pj5:"Your pitch structure",
+    save_btn:"Save",saved_msg:"✓ Project saved in this session",
+    correct_msg:"Correct! +10 points",wrong_msg:"Incorrect",next_q:"Next question →",see_score:"See my score →",restart:"Restart",see_badges:"See my badges",
+    pts_lbl:"Points",replies_lbl:"Correct",badges_lbl:"Badges",
   }
+};
+
+let curLang = 'fr';
+
+function goGuide(){
+  const cur = (window.top || window).location.href;
+  const base = cur.substring(0, cur.lastIndexOf('/') + 1);
+  (window.top || window).location.href = base + 'guide.html';
+}
+
+function t(key){ return (T[curLang]||T.fr)[key] || (T.fr)[key] || key; }
+
+function setLang(lang){
+  curLang = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.textContent.trim()===(lang==='ar'?'ع':lang.toUpperCase())));
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    const key = el.getAttribute('data-t');
+    const val = t(key);
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') el.placeholder = val;
+    else el.innerHTML = val;
+  });
+  const guideTxt = document.getElementById('guide-link-txt');
+  if(guideTxt) guideTxt.textContent = lang==='ar'?'الدليل':lang==='en'?'User Guide':'Guide';
+  renderStepsGrid();
+  if(document.getElementById('quiz-container').children.length) renderQuiz();
+  if(document.getElementById('badges-grid').children.length) renderBadges();
+  if(document.getElementById('cases-list').children.length) renderCases();
+}
+
+// ======================== DATA ========================
+const getSteps = ()=>[
+  {key:"emp",color:"var(--emp)",bg:"var(--emp-bg)",icon:"❤️",label:`${t('step1_name')} — 1`,name:t('step1_name'),
+   desc:curLang==='ar'?"ملاحظة المستخدمين ومقابلتهم لاكتشاف احتياجاتهم الحقيقية وإحباطاتهم وتوقعاتهم الخفية.":curLang==='en'?"Observe, interview and put yourself in the user's shoes to discover real needs, frustrations and hidden expectations.":"Observer, interviewer et se mettre à la place de l'utilisateur pour découvrir ses besoins réels, ses frustrations et ses attentes cachées.",
+   example:curLang==='ar'?"مشروع التكوين على الذكاء الاصطناعي: الوصول للإنترنت، المستوى الرقمي، اللغة المحلية، القيود المادية.":curLang==='en'?"AI training project: internet access, digital literacy, dominant language, material constraints.":"Projet formation IA rurale : accès Internet, niveau numérique, langue dominante, contraintes matérielles.",
+   tools:curLang==='ar'?["مقابلات","ملاحظة ميدانية","خريطة التعاطف","شخصيات","يوميات الملاحظة"]:curLang==='en'?["Interviews","Field observation","Empathy map","Personas","Field diary"]:["Interviews","Observation terrain","Carte d'empathie","Personas","Journal de bord"]},
+  {key:"def",color:"var(--def)",bg:"var(--def-bg)",icon:"🎯",label:`${t('step2_name')} — 2`,name:t('step2_name'),
+   desc:curLang==='ar'?"تركيب البيانات المجمعة لصياغة مشكلة محورية دقيقة موجهة نحو المستخدم.":curLang==='en'?"Synthesize collected data to formulate a precise, user-oriented core problem.":"Synthétiser les données collectées pour formuler un problème central précis, orienté utilisateur.",
+   example:curLang==='ar'?"«أحمد، طالب هندسة، يحتاج الوصول للموارد دون إنترنت لأن الحرم الجامعي يعاني ضعف الاتصال»":curLang==='en'?"\"Ahmed, GI student, needs to access resources offline because the campus has an unstable connection.\"":"\"Ahmed, étudiant en GI, a besoin d'accéder aux ressources hors ligne parce que le campus a une connexion instable.\"",
+   tools:curLang==='ar'?["صياغة POV","مخطط التقارب","أسئلة HMW","شجرة المشكلات"]:curLang==='en'?["POV statement","Affinity diagram","HMW questions","Problem tree"]:["POV statement","Diagramme d'affinité","HMW questions","Arbre des problèmes"]},
+  {key:"ide",color:"var(--ide)",bg:"var(--ide-bg)",icon:"🧠",label:`${t('step3_name')} — 3`,name:t('step3_name'),
+   desc:curLang==='ar'?"استكشاف جميع الحلول الممكنة دون حكم. الكمية تسبق الجودة لتحفيز الإبداع.":curLang==='en'?"Freely explore all possible solutions without judgment. Quantity over quality to stimulate creativity.":"Explorer librement toutes les solutions possibles sans jugement. La quantité prime sur la qualité pour stimuler la créativité.",
+   example:curLang==='ar'?"ورشة 2 ساعة ← 45 فكرة ← تصويت ← أفضل 3 ← تعمق مع العميل.":curLang==='en'?"2h workshop → 45 ideas → vote → top 3 → deep dive with client.":"Atelier 2h → 45 idées → vote → top 3 → approfondissement avec le client.",
+   tools:curLang==='ar'?["عصف ذهني","خريطة ذهنية","SCAMPER","أسوأ فكرة ممكنة","ورش تعاونية"]:curLang==='en'?["Brainstorming","Mind mapping","SCAMPER","Worst Possible Idea","Collaborative workshop"]:["Brainstorming","Mind mapping","SCAMPER","Worst Possible Idea","Atelier collaboratif"]},
+  {key:"pro",color:"var(--pro)",bg:"var(--pro-bg)",icon:"🔧",label:`${t('step4_name')} — 4`,name:t('step4_name'),
+   desc:curLang==='ar'?"بناء تمثيلات سريعة وغير مكلفة للأفكار المختارة لجعلها قابلة للاختبار. التعلم لا الكمال.":curLang==='en'?"Build fast, low-cost representations of selected ideas to make them testable. Learn, don't perfect.":"Construire des représentations rapides et peu coûteuses des idées retenues pour les rendre testables. Apprendre, pas perfectionner.",
+   example:curLang==='ar'?"نموذج ورقي للوحة القيادة + Arduino يحاكي 3 مجسات ← اختبار في يومين.":curLang==='en'?"Paper mockup of dashboard + Arduino simulating 3 sensors → tested in 2 days.":"Maquette papier du dashboard + Arduino simulant 3 capteurs → testé en 2 jours.",
+   tools:curLang==='ar'?["نموذج ورقي","نماذج Figma","قصة مصورة","MVP رقمي","نموذج مادي"]:curLang==='en'?["Paper mockup","Figma wireframes","Storyboard","Digital MVP","Physical prototype"]:["Maquette papier","Wireframes Figma","Storyboard","MVP numérique","Prototype physique"]},
+  {key:"tes",color:"var(--tes)",bg:"var(--tes-bg)",icon:"🧪",label:`${t('step5_name')} — 5`,name:t('step5_name'),
+   desc:curLang==='ar'?"تقديم النموذج للمستخدمين الحقيقيين لمراقبة ردود أفعالهم وجمع ملاحظاتهم وتحديد ما يجب تحسينه.":curLang==='en'?"Submit the prototype to real users to observe reactions, gather feedback and identify improvements.":"Soumettre le prototype aux utilisateurs réels pour observer leurs réactions, recueillir leurs retours et identifier ce qui doit être amélioré.",
+   example:curLang==='ar'?"اختبار مع 10 مستخدمين ← ملاحظات نوعية ← تكرار ← تحسين التنقل -40% أخطاء.":curLang==='en'?"Test with 10 users → qualitative feedback → iteration → navigation improved -40% errors.":"Test pilote 10 utilisateurs → retours qualitatifs → itération → amélioration navigation -40% erreurs.",
+   tools:curLang==='ar'?["اختبارات المستخدم","التفكير بصوت عالٍ","شبكة التقييم","خرائط الحرارة","خطة التكرار"]:curLang==='en'?["User tests","Think-aloud","Evaluation grid","Heatmaps","Iteration plan"]:["Tests utilisateurs","Think-aloud","Grille d'évaluation","Heatmaps","Plan d'itération"]}
 ];
 
-const QUIZ = [
-  {
-    q:"Un étudiant observe que les agriculteurs marocains perdent du temps à irriguer manuellement. Quelle est la première étape du Design Thinking ?",
-    opts:["Créer un prototype d'application mobile","Définir le problème avec une formulation POV","Aller interviewer les agriculteurs sur le terrain","Brainstormer des solutions technologiques"],
-    correct:2, expl:"L'Empathie vient en premier : comprendre les besoins réels via l'observation et les interviews avant toute solution.", step:"Empathie", badge:"emp"
-  },
-  {
-    q:"Vous avez collecté 40 retours d'étudiants en ingénierie. Quelle formulation POV est correcte ?",
-    opts:["L'application doit avoir une interface moderne","Les étudiants ont besoin d'une app de cours","Ahmed, étudiant en GI, a besoin d'accéder aux ressources hors ligne parce que le campus a une connexion instable","Il faut développer une plateforme e-learning responsive"],
-    correct:2, expl:"Un bon POV cite l'utilisateur précis, son besoin et l'insight (la raison profonde). Les autres formulations sont trop génériques.", step:"Définition", badge:"def"
-  },
-  {
-    q:"En session d'idéation, un membre dit « cette idée de chatbot IA est irréaliste ». Quelle est la bonne réaction ?",
-    opts:["Accepter la critique et supprimer l'idée","Reporter le jugement — toutes les idées sont valides à ce stade","Voter immédiatement pour les meilleures idées","Passer directement au prototypage"],
-    correct:1, expl:"En idéation, la règle fondamentale est de différer le jugement. La quantité prime sur la qualité. On filtre seulement après.", step:"Idéation", badge:"ide"
-  },
-  {
-    q:"Pour tester rapidement un système hydroponique connecté, quel prototype est le plus approprié ?",
-    opts:["Développer l'application complète avec toutes les fonctions","Écrire une documentation technique de 50 pages","Créer une maquette papier du dashboard + simulation manuelle des données","Attendre d'avoir le matériel réel pour commencer"],
-    correct:2, expl:"Le prototype doit être rapide et peu coûteux. Une maquette papier permet de tester les interactions sans investissement technique majeur.", step:"Prototype", badge:"pro"
-  },
-  {
-    q:"Après le test d'une plateforme éducative, 4 utilisateurs sur 5 trouvent la navigation confuse. Que faire ?",
-    opts:["Ignorer — 5 utilisateurs c'est insuffisant statistiquement","Lancer la plateforme et corriger après","Retourner à l'étape Définition et reformuler si nécessaire","Abandonner le projet"],
-    correct:2, expl:"Le processus est itératif. Un retour massif sur la navigation peut signaler un problème de définition ou de concept. On revient en arrière.", step:"Test", badge:"tes"
-  },
-  {
-    q:"Quelle est la principale différence entre Design Thinking et Lean Startup ?",
-    opts:["Le Design Thinking est uniquement pour les designers","Le Lean Startup ignore l'utilisateur final","Le DT centre sur le besoin humain, le Lean Startup valide le modèle économique","Les deux méthodes sont identiques"],
-    correct:2, expl:"DT = comprendre le besoin humain + créativité. Lean Startup = tester rapidement la viabilité économique avec un MVP. Complémentaires.", step:"Comparaison", badge:"mas"
-  }
+const getQuiz = ()=>[
+  {q:curLang==='ar'?"يلاحظ أحد الطلاب أن المزارعين يضيعون وقتاً في الري اليدوي. ما هي الخطوة الأولى؟":curLang==='en'?"A student notices farmers waste time with manual irrigation. What is the first Design Thinking step?":"Un étudiant observe que les agriculteurs perdent du temps à irriguer manuellement. Quelle est la première étape ?",
+   opts:curLang==='ar'?["إنشاء نموذج أولي لتطبيق موبايل","تعريف المشكلة بصياغة POV","إجراء مقابلات مع المزارعين في الميدان","عصف ذهني للحلول التكنولوجية"]:curLang==='en'?["Create a mobile app prototype","Define the problem with a POV statement","Go interview farmers in the field","Brainstorm technological solutions"]:["Créer un prototype d'application mobile","Définir le problème avec une formulation POV","Aller interviewer les agriculteurs sur le terrain","Brainstormer des solutions technologiques"],
+   correct:2,badge:"emp",
+   expl:curLang==='ar'?"التعاطف يأتي أولاً: فهم الاحتياجات الحقيقية عبر الملاحظة والمقابلات قبل أي حل.":curLang==='en'?"Empathy comes first: understand real needs through observation and interviews before any solution.":"L'Empathie vient en premier : comprendre les besoins réels via l'observation et les interviews avant toute solution."},
+  {q:curLang==='ar'?"أي صياغة POV صحيحة من بين هذه الخيارات؟":curLang==='en'?"Which POV statement is correct?":"Parmi ces formulations, laquelle est une bonne formulation POV ?",
+   opts:curLang==='ar'?["التطبيق يجب أن يكون له واجهة عصرية","الطلاب يحتاجون تطبيقاً للدروس","أحمد، طالب هندسة، يحتاج الوصول للموارد دون إنترنت لأن الحرم الجامعي يعاني ضعف الاتصال","يجب تطوير منصة تعلم إلكتروني متجاوبة"]:curLang==='en'?["The app should have a modern interface","Students need a course app","Ahmed, GI student, needs to access resources offline because the campus has an unstable connection","We need to develop a responsive e-learning platform"]:["L'application doit avoir une interface moderne","Les étudiants ont besoin d'une app de cours","Ahmed, étudiant en GI, a besoin d'accéder aux ressources hors ligne parce que le campus a une connexion instable","Il faut développer une plateforme e-learning responsive"],
+   correct:2,badge:"def",
+   expl:curLang==='ar'?"POV جيد يذكر المستخدم الدقيق، احتياجه، والسبب العميق (insight). البقية عامة جداً.":curLang==='en'?"A good POV names the specific user, their need, and the insight (deep reason). Others are too generic.":"Un bon POV cite l'utilisateur précis, son besoin et l'insight. Les autres formulations sont trop génériques."},
+  {q:curLang==='ar'?"في جلسة العصف الذهني، يقول أحد الأعضاء «هذه الفكرة غير واقعية». ما هو الرد الصحيح؟":curLang==='en'?"During ideation, a member says \"this idea is unrealistic\". What is the right reaction?":"En idéation, un membre dit « cette idée est irréaliste ». Quelle est la bonne réaction ?",
+   opts:curLang==='ar'?["قبول النقد وحذف الفكرة","تأجيل الحكم — كل الأفكار صالحة في هذه المرحلة","التصويت فوراً على أفضل الأفكار","الانتقال مباشرة للنموذج الأولي"]:curLang==='en'?["Accept the criticism and remove the idea","Defer judgment — all ideas are valid at this stage","Vote immediately for the best ideas","Move directly to prototyping"]:["Accepter la critique et supprimer l'idée","Reporter le jugement — toutes les idées sont valides à ce stade","Voter immédiatement pour les meilleures idées","Passer directement au prototypage"],
+   correct:1,badge:"ide",
+   expl:curLang==='ar'?"القاعدة الأساسية في الابتكار: تأجيل الحكم. الكمية تسبق الجودة. التصفية تأتي بعد.":curLang==='en'?"The fundamental rule: defer judgment. Quantity over quality. Filter afterward.":"En idéation, la règle fondamentale est de différer le jugement. La quantité prime sur la qualité. On filtre après."},
+  {q:curLang==='ar'?"لاختبار نظام استزراعي مائي متصل بسرعة، أي نموذج أولي هو الأنسب؟":curLang==='en'?"To quickly test a connected hydroponic system, which prototype is most appropriate?":"Pour tester rapidement un système hydroponique connecté, quel prototype est le plus approprié ?",
+   opts:curLang==='ar'?["تطوير التطبيق الكامل بكل الوظائف","كتابة توثيق تقني من 50 صفحة","إنشاء نموذج ورقي للوحة القيادة + محاكاة يدوية للبيانات","انتظار الحصول على المعدات الحقيقية"]:curLang==='en'?["Develop the full application with all functions","Write a 50-page technical documentation","Create a paper mockup of the dashboard + manual data simulation","Wait to have the real hardware before starting"]:["Développer l'application complète avec toutes les fonctions","Écrire une documentation technique de 50 pages","Créer une maquette papier du dashboard + simulation manuelle des données","Attendre d'avoir le matériel réel pour commencer"],
+   correct:2,badge:"pro",
+   expl:curLang==='ar'?"النموذج الأولي يجب أن يكون سريعاً وغير مكلف. النموذج الورقي يتيح اختبار التفاعلات دون استثمار تقني كبير.":curLang==='en'?"Prototypes must be fast and cheap. A paper mockup allows testing interactions without major technical investment.":"Le prototype doit être rapide et peu coûteux. Une maquette papier permet de tester les interactions sans investissement technique majeur."},
+  {q:curLang==='ar'?"بعد اختبار منصة تعليمية، 4 من 5 مستخدمين يجدون التنقل مربكاً. ماذا تفعل؟":curLang==='en'?"After testing an educational platform, 4 out of 5 users find the navigation confusing. What do you do?":"Après le test d'une plateforme éducative, 4 sur 5 trouvent la navigation confuse. Que faire ?",
+   opts:curLang==='ar'?["تجاهل الأمر — 5 مستخدمين غير كافٍ إحصائياً","إطلاق المنصة والتصحيح لاحقاً","العودة لمرحلة التعريف وإعادة صياغة المشكلة إذا لزم","التخلي عن المشروع"]:curLang==='en'?["Ignore it — 5 users isn't statistically significant","Launch the platform and fix it later","Return to the Define step and reformulate if necessary","Abandon the project"]:["Ignorer — 5 utilisateurs c'est insuffisant statistiquement","Lancer la plateforme et corriger après","Retourner à l'étape Définition et reformuler si nécessaire","Abandonner le projet"],
+   correct:2,badge:"tes",
+   expl:curLang==='ar'?"العملية تكرارية. ردود فعل جماعية حول التنقل قد تشير لمشكلة في مرحلة التعريف. نرجع للخلف.":curLang==='en'?"The process is iterative. Massive navigation feedback may indicate a definition problem. Go back.":"Le processus est itératif. Un retour massif sur la navigation peut signaler un problème de définition. On revient en arrière."},
+  {q:curLang==='ar'?"ما هو الفرق الرئيسي بين التفكير التصميمي والشركة الناشئة الرشيقة؟":curLang==='en'?"What is the main difference between Design Thinking and Lean Startup?":"Quelle est la principale différence entre Design Thinking et Lean Startup ?",
+   opts:curLang==='ar'?["التفكير التصميمي للمصممين فقط","الشركة الناشئة الرشيقة تتجاهل المستخدم النهائي","التفكير التصميمي يركز على الحاجة الإنسانية، الشركة الناشئة الرشيقة تتحقق من النموذج الاقتصادي","المنهجيتان متطابقتان"]:curLang==='en'?["Design Thinking is only for designers","Lean Startup ignores the end user","DT focuses on human need, Lean Startup validates the business model","Both methods are identical"]:["Le Design Thinking est uniquement pour les designers","Le Lean Startup ignore l'utilisateur final","Le DT centre sur le besoin humain, le Lean Startup valide le modèle économique","Les deux méthodes sont identiques"],
+   correct:2,badge:"mas",
+   expl:curLang==='ar'?"DT = فهم الحاجة الإنسانية + الإبداع. الشركة الناشئة الرشيقة = اختبار الجدوى الاقتصادية. متكاملتان.":curLang==='en'?"DT = understand human need + creativity. Lean Startup = test economic viability. Complementary.":"DT = comprendre le besoin humain + créativité. Lean Startup = tester la viabilité économique avec un MVP. Complémentaires."},
+  {q:curLang==='ar'?"ما هو نموذج الأعمال الأنسب لمنصة تعليمية تستهدف الطلاب والمؤسسات؟":curLang==='en'?"What is the most suitable business model for an educational platform targeting students and institutions?":"Quel est le modèle économique le plus adapté pour une plateforme éducative ciblant étudiants et institutions ?",
+   opts:curLang==='ar'?["نموذج مجاني بالكامل","نموذج Freemium مع اشتراكات مؤسسية","بيع مرة واحدة بسعر مرتفع","نموذج مدعوم بالإعلانات فقط"]:curLang==='en'?["Completely free model","Freemium model with institutional subscriptions","One-time high-price sale","Ad-supported model only"]:["Modèle entièrement gratuit","Modèle Freemium avec abonnements institutionnels","Vente unique à prix élevé","Modèle financé uniquement par la publicité"],
+   correct:1,badge:"biz",
+   expl:curLang==='ar'?"Freemium يجذب الطلاب مجاناً بينما الاشتراكات المؤسسية تولد إيرادات مستدامة. أفضل توازن للمنصات التعليمية.":curLang==='en'?"Freemium attracts students for free while institutional subscriptions generate sustainable revenue. Best balance for educational platforms.":"Le modèle Freemium attire les étudiants gratuitement tandis que les abonnements institutionnels génèrent des revenus durables. Meilleur équilibre pour les plateformes éducatives."},
+  {q:curLang==='ar'?"ما هي أولى الخطوات في تقديم العرض (Pitch) أمام لجنة التحكيم؟":curLang==='en'?"What is the very first step when pitching before a jury?":"Quelle est la toute première étape lors d'un pitch devant un jury ?",
+   opts:curLang==='ar'?["عرض نموذج الأعمال مباشرة","البدء بشريحة الفريق","افتتاح بـ Hook جذاب: إحصائية صادمة أو قصة حقيقية","شرح الجانب التقني للحل"]:curLang==='en'?["Present the business model directly","Start with the team slide","Open with an engaging Hook: shocking stat or true story","Explain the technical aspects of the solution"]:["Présenter directement le Business Model","Commencer par la slide de l'équipe","Ouvrir avec un Hook engageant : stat choc ou histoire vraie","Expliquer les aspects techniques de la solution"],
+   correct:2,badge:"pit",
+   expl:curLang==='ar'?"الـ Hook يستقطب انتباه اللجنة منذ الثانية الأولى. يجب أن تشعر اللجنة بالمشكلة قبل أي شيء آخر.":curLang==='en'?"The Hook captures the jury's attention from second one. They must feel the problem before anything else.":"Le Hook capte l'attention du jury dès la première seconde. Ils doivent ressentir le problème avant tout le reste."}
 ];
 
-const BADGES = [
-  {id:"emp",icon:"❤️",bg:"var(--emp-bg)",title:"Empathiste",desc:"Maître de l'étape Empathie",req:"Q1 réussie"},
-  {id:"def",icon:"🎯",bg:"var(--def-bg)",title:"Définisseur",desc:"Expert en formulation POV",req:"Q2 réussie"},
-  {id:"ide",icon:"🧠",bg:"var(--ide-bg)",title:"Idéateur",desc:"Maître du brainstorming",req:"Q3 réussie"},
-  {id:"pro",icon:"🔧",bg:"var(--pro-bg)",title:"Prototypeur",desc:"Spécialiste du prototypage rapide",req:"Q4 réussie"},
-  {id:"tes",icon:"🧪",bg:"var(--tes-bg)",title:"Testeur",desc:"Expert en tests utilisateurs",req:"Q5 réussie"},
-  {id:"mas",icon:"👑",bg:"rgba(167,139,250,0.12)",title:"DT Master",desc:"Score parfait au quiz",req:"100% au quiz"}
+const getBadges = ()=>[
+  {id:"emp",icon:"❤️",bg:"var(--emp-bg)",title:curLang==='ar'?"متعاطف":curLang==='en'?"Empathist":"Empathiste",desc:curLang==='ar'?"إتقان مرحلة التعاطف":curLang==='en'?"Empathy step master":"Maître de l'étape Empathie",req:curLang==='ar'?"س1 صحيحة":curLang==='en'?"Q1 passed":"Q1 réussie"},
+  {id:"def",icon:"🎯",bg:"var(--def-bg)",title:curLang==='ar'?"محدد":curLang==='en'?"Definer":"Définisseur",desc:curLang==='ar'?"خبير صياغة POV":curLang==='en'?"POV formulation expert":"Expert en formulation POV",req:curLang==='ar'?"س2 صحيحة":curLang==='en'?"Q2 passed":"Q2 réussie"},
+  {id:"ide",icon:"🧠",bg:"var(--ide-bg)",title:curLang==='ar'?"مبتكر":curLang==='en'?"Ideator":"Idéateur",desc:curLang==='ar'?"سيد العصف الذهني":curLang==='en'?"Brainstorming master":"Maître du brainstorming",req:curLang==='ar'?"س3 صحيحة":curLang==='en'?"Q3 passed":"Q3 réussie"},
+  {id:"pro",icon:"🔧",bg:"var(--pro-bg)",title:curLang==='ar'?"نموذجي":curLang==='en'?"Prototyper":"Prototypeur",desc:curLang==='ar'?"خبير النماذج الأولية السريعة":curLang==='en'?"Rapid prototyping specialist":"Spécialiste du prototypage rapide",req:curLang==='ar'?"س4 صحيحة":curLang==='en'?"Q4 passed":"Q4 réussie"},
+  {id:"tes",icon:"🧪",bg:"var(--tes-bg)",title:curLang==='ar'?"مختبر":curLang==='en'?"Tester":"Testeur",desc:curLang==='ar'?"خبير اختبارات المستخدمين":curLang==='en'?"User testing expert":"Expert en tests utilisateurs",req:curLang==='ar'?"س5 صحيحة":curLang==='en'?"Q5 passed":"Q5 réussie"},
+  {id:"biz",icon:"💰",bg:"var(--biz-bg)",title:curLang==='ar'?"نموذج الأعمال":curLang==='en'?"Business Model":"Business Model",desc:curLang==='ar'?"خبير البيزنس موديل":curLang==='en'?"Business model expert":"Expert en modèle économique",req:curLang==='ar'?"س7 صحيحة":curLang==='en'?"Q7 passed":"Q7 réussie"},
+  {id:"pit",icon:"🎤",bg:"var(--pit-bg)",title:curLang==='ar'?"مقدِّم":curLang==='en'?"Pitcher":"Pitcheur",desc:curLang==='ar'?"سيد فن الإقناع":curLang==='en'?"Master of convincing":"Maître de l'art du pitch",req:curLang==='ar'?"س8 صحيحة":curLang==='en'?"Q8 passed":"Q8 réussie"},
+  {id:"mas",icon:"👑",bg:"rgba(167,139,250,0.12)",title:curLang==='ar'?"أسطورة DT":curLang==='en'?"DT Master":"DT Master",desc:curLang==='ar'?"نتيجة مثالية":curLang==='en'?"Perfect score on the quiz":"Score parfait au quiz",req:curLang==='ar'?"100% في الاختبار":curLang==='en'?"100% on the quiz":"100% au quiz"}
 ];
 
 const CASES = [
-  {
-    title:"Système de surveillance qualité eau — IoT",
-    domain:"Génie industriel / IoT",
-    tags:["IoT","Environnement","Capteurs"],
-    color:"var(--def)",
-    problem:"Les techniciens de traitement d'eau perdent 3h/jour à relever manuellement les mesures sur 12 capteurs répartis sur 2 km.",
-    steps:[
-      {phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Interview de 8 techniciens → frustration principale : déplacements inutiles + données perdues sur papier"},
-      {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Ali, technicien senior, a besoin de visualiser toutes les mesures en temps réel parce que les déplacements réduisent le temps de traitement"},
-      {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"32 idées générées → top 3 : dashboard web temps réel, alertes SMS, rapport automatique PDF"},
-      {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Maquette Figma du dashboard + Arduino simulant 3 capteurs → testé en 2 jours"},
-      {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"5 techniciens testent → 80% de satisfaction, problème identifié : alertes trop fréquentes → ajustement des seuils"}
-    ],
-    outcome:"Réduction de 70% des déplacements. Projet réel mené en école d'ingénieurs, Casablanca."
-  },
-  {
-    title:"Plateforme de stages connectée — GRH numérique",
-    domain:"Génie informatique / RH",
-    tags:["EdTech","RH","Web"],
-    color:"var(--ide)",
-    problem:"Les étudiants en ingénierie perdent en moyenne 6 semaines à trouver un stage par manque de visibilité sur les offres locales.",
-    steps:[
-      {phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Questionnaire 120 étudiants + 15 entretiens entreprises → besoin de matching automatique par compétences"},
-      {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Fatima, étudiante 4e année, a besoin d'un accès centralisé aux offres parce que les canaux actuels sont fragmentés"},
-      {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"Atelier 2h, 45 idées → sélection : matching par compétences, chat direct recruteur, calendrier de suivi"},
-      {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Formulaire Google + tableur automatisé comme MVP — testé en 3 jours avec 30 étudiants"},
-      {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"Pilote avec 30 étudiants, 4 entreprises → 12 stages trouvés en 2 semaines vs 6 semaines habituellement"}
-    ],
-    outcome:"Temps de recherche réduit de 67%. Prototype transformé en startup par les étudiants de l'ENSIAS."
-  },
-  {
-    title:"Assistant IA pour maintenance prédictive",
-    domain:"Génie mécanique / IA",
-    tags:["IA","Industrie 4.0","ML"],
-    color:"var(--tes)",
-    problem:"Une usine de textile perd 15% de production par mois à cause de pannes machines non anticipées.",
-    steps:[
-      {phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Shadowing 3 jours en usine → les techniciens ignorent les signaux faibles précurseurs de pannes"},
-      {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Hassan, responsable maintenance, a besoin d'anticiper les pannes parce que chaque arrêt coûte 8000 MAD/heure"},
-      {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"SCAMPER + HMW → idée retenue : modèle ML sur vibrations + température + tableau de bord alertes"},
-      {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Modèle Python simplifié sur données historiques + dashboard Streamlit en 1 semaine"},
-      {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"Test sur 2 machines pendant 1 mois → 3 pannes anticipées sur 3 → validation complète du concept"}
-    ],
-    outcome:"ROI potentiel calculé : 480 000 MAD/an. Projet présenté au Forum des Entreprises ENSAM."
-  }
+  {title:"Système de surveillance qualité eau — IoT",domain:"Génie industriel / IoT",tags:["IoT","Environnement","Capteurs"],color:"var(--def)",
+   problem:"Les techniciens de traitement d'eau perdent 3h/jour à relever manuellement les mesures sur 12 capteurs répartis sur 2 km.",
+   steps:[{phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Interview de 8 techniciens → frustration principale : déplacements inutiles + données perdues sur papier"},
+          {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Ali, technicien senior, a besoin de visualiser toutes les mesures en temps réel parce que les déplacements réduisent le temps de traitement"},
+          {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"32 idées générées → top 3 : dashboard web temps réel, alertes SMS, rapport automatique PDF"},
+          {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Maquette Figma du dashboard + Arduino simulant 3 capteurs → testé en 2 jours"},
+          {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"5 techniciens testent → 80% de satisfaction → alertes trop fréquentes → ajustement seuils"}],
+   outcome:"Réduction de 70% des déplacements. Projet mené en école d'ingénieurs, Casablanca."},
+  {title:"Plateforme de stages connectée — GRH numérique",domain:"Génie informatique / RH",tags:["EdTech","RH","Web"],color:"var(--ide)",
+   problem:"Les étudiants en ingénierie perdent en moyenne 6 semaines à trouver un stage par manque de visibilité sur les offres locales.",
+   steps:[{phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Questionnaire 120 étudiants + 15 entretiens entreprises → besoin de matching automatique"},
+          {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Fatima, étudiante 4e année, a besoin d'un accès centralisé aux offres parce que les canaux actuels sont fragmentés"},
+          {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"Atelier 2h, 45 idées → matching compétences, chat direct recruteur, calendrier de suivi"},
+          {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Formulaire Google + tableur automatisé → MVP testé en 3 jours"},
+          {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"Pilote 30 étudiants, 4 entreprises → 12 stages trouvés en 2 semaines vs 6 semaines"}],
+   outcome:"Temps de recherche réduit de 67%. Prototype transformé en startup par les étudiants de l'ENSIAS."},
+  {title:"Assistant IA pour maintenance prédictive",domain:"Génie mécanique / IA",tags:["IA","Industrie 4.0","ML"],color:"var(--tes)",
+   problem:"Une usine de textile perd 15% de production par mois à cause de pannes machines non anticipées.",
+   steps:[{phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Shadowing 3 jours en usine → techniciens ignorent les signaux faibles précurseurs de pannes"},
+          {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Hassan, responsable maintenance, a besoin d'anticiper les pannes parce que chaque arrêt coûte 8000 MAD/heure"},
+          {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"SCAMPER + HMW → modèle ML vibrations + température + dashboard alertes"},
+          {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Modèle Python sur données historiques + dashboard Streamlit en 1 semaine"},
+          {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"Test 2 machines 1 mois → 3 pannes anticipées sur 3 → validation complète"}],
+   outcome:"ROI estimé : 480 000 MAD/an. Présenté au Forum des Entreprises ENSAM."}
 ];
 
-// STATE
-let state = {
-  score: 0,
-  qIdx: 0,
-  answered: false,
-  correct: 0,
-  unlocked: new Set(),
-  activeStep: 0,
-  caseOpen: -1
-};
+// ======================== STATE ========================
+let state={score:0,qIdx:0,answered:false,correct:0,unlocked:new Set(),activeStep:0,caseOpen:-1};
 
 function updateStats(){
-  document.getElementById("score-display").textContent = state.score;
-  document.getElementById("stat-score").textContent = state.score;
-  document.getElementById("stat-badges").textContent = state.unlocked.size+"/6";
-  document.getElementById("stat-correct").textContent = state.correct+"/6";
+  document.getElementById("score-display").textContent=state.score;
+  document.getElementById("stat-score").textContent=state.score;
+  document.getElementById("stat-badges").textContent=state.unlocked.size+"/8";
+  document.getElementById("stat-correct").textContent=state.correct+"/8";
 }
 
-// SECTIONS
-function showSection(id, btn){
+function showSection(id,btn){
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   document.querySelectorAll(".nav-tab").forEach(b=>b.classList.remove("active"));
   document.getElementById("sec-"+id).classList.add("active");
@@ -774,181 +966,141 @@ function showSection(id, btn){
   if(id==="cases") renderCases();
 }
 
-// STEPS (home)
 function renderStepsGrid(){
-  const g = document.getElementById("steps-grid");
-  const active = state.activeStep;
-  g.innerHTML = STEPS.map((s,i)=>`
-    <div class="step-detail ${i===4?'span2':''}" style="cursor:pointer;border-left:${i===active?'2px solid '+s.color:'none'}" onclick="goStep(${i})">
+  const g=document.getElementById("steps-grid");
+  const steps=getSteps();
+  g.innerHTML=steps.map((s,i)=>`
+    <div class="step-detail ${i===4?'span2':''}" style="${i===state.activeStep?'border-left:2px solid '+s.color:''}" onclick="goStep(${i})">
       <div class="step-header">
         <div class="step-icon" style="background:${s.bg}">${s.icon}</div>
-        <div>
-          <div class="step-label" style="color:${s.color}">${s.label} — ${s.name}</div>
-          <div class="step-name" style="font-size:14px;font-weight:400;color:var(--muted);margin-top:2px">${s.desc.slice(0,70)}...</div>
-        </div>
+        <div><div class="step-label" style="color:${s.color}">${s.label}</div>
+        <div style="font-size:14px;color:var(--muted);margin-top:2px">${s.desc.slice(0,70)}...</div></div>
       </div>
-      ${i===active?`
+      ${i===state.activeStep?`
         <div class="step-desc">${s.desc}</div>
         <div class="step-example" style="color:${s.color};border-left-color:${s.color}">${s.example}</div>
-        <div class="tools-row">
-          ${s.tools.map(t=>`<span class="tool-chip" style="border-color:${s.color}20;color:${s.color}">${t}</span>`).join('')}
-        </div>
+        <div class="tools-row">${s.tools.map(t=>`<span class="tool-chip" style="border-color:${s.color}20;color:${s.color}">${t}</span>`).join('')}</div>
       `:''}
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function goStep(i){
-  state.activeStep = i;
-  document.querySelectorAll(".flow-step").forEach((el,idx)=>{
-    el.classList.remove("active");
-    if(idx===i) el.classList.add("active");
-  });
+  state.activeStep=i;
+  document.querySelectorAll(".flow-step").forEach((el,idx)=>{el.classList.toggle("active",idx===i)});
   renderStepsGrid();
 }
 
-// QUIZ
 function renderQuiz(){
-  if(state.qIdx >= QUIZ.length){ renderQuizEnd(); return; }
-  const q = QUIZ[state.qIdx];
-  const pct = Math.round((state.qIdx/QUIZ.length)*100);
-  const stepColors = {"Empathie":"var(--emp)","Définition":"var(--def)","Idéation":"var(--ide)","Prototype":"var(--pro)","Test":"var(--tes)","Comparaison":"var(--ide)"};
-  const col = stepColors[q.step]||"var(--ide)";
-
-  document.getElementById("quiz-container").innerHTML = `
-    <div class="quiz-progress">
-      <div class="q-bar"><div class="q-bar-fill" style="width:${pct}%"></div></div>
-      <div class="q-label">Q${state.qIdx+1} / ${QUIZ.length}</div>
-    </div>
+  const QUIZ=getQuiz();
+  if(state.qIdx>=QUIZ.length){renderQuizEnd();return;}
+  const q=QUIZ[state.qIdx];
+  const pct=Math.round((state.qIdx/QUIZ.length)*100);
+  const stepColors={"Empathie":"var(--emp)","Définition":"var(--def)","Idéation":"var(--ide)","Prototype":"var(--pro)","Test":"var(--tes)","Comparaison":"var(--ide)","Business Model":"var(--biz)","Pitch":"var(--pit)"};
+  const stepName = ['Empathie','Définition','Idéation','Prototype','Test','Comparaison','Business Model','Pitch'][state.qIdx];
+  const col=stepColors[stepName]||"var(--ide)";
+  document.getElementById("quiz-container").innerHTML=`
+    <div class="quiz-progress"><div class="q-bar"><div class="q-bar-fill" style="width:${pct}%"></div></div><div class="q-label">Q${state.qIdx+1}/${QUIZ.length}</div></div>
     <div class="quiz-card">
-      <div class="quiz-tag" style="background:rgba(255,255,255,0.04);border:1px solid ${col}40;color:${col}">${q.step}</div>
+      <div class="quiz-tag" style="background:rgba(255,255,255,0.04);border:1px solid ${col}40;color:${col}">${stepName}</div>
       <div class="quiz-question">${q.q}</div>
-      <div id="opts-wrap">
-        ${q.opts.map((o,i)=>`
-          <button class="opt" id="opt-${i}" onclick="answerQ(${i})">
-            <span class="opt-letter">${String.fromCharCode(65+i)}</span>
-            ${o}
-          </button>
-        `).join('')}
-      </div>
+      <div>${q.opts.map((o,i)=>`<button class="opt" id="opt-${i}" onclick="answerQ(${i})"><span class="opt-letter">${String.fromCharCode(65+i)}</span>${o}</button>`).join('')}</div>
       <div id="quiz-feedback" class="feedback-box"></div>
-    </div>
-  `;
+    </div>`;
 }
 
 function answerQ(i){
-  if(state.answered) return;
-  state.answered = true;
-  const q = QUIZ[state.qIdx];
+  if(state.answered)return;
+  state.answered=true;
+  const QUIZ=getQuiz();
+  const q=QUIZ[state.qIdx];
   document.querySelectorAll(".opt").forEach(b=>b.classList.add("locked"));
   if(i===q.correct){
     document.getElementById("opt-"+i).classList.add("correct");
-    state.score += 10; state.correct++;
+    state.score+=10;state.correct++;
     state.unlocked.add(q.badge);
-    if(state.correct===QUIZ.length) state.unlocked.add("mas");
-    const fb = document.getElementById("quiz-feedback");
-    fb.className = "feedback-box show good";
-    fb.innerHTML = `<div class="feedback-title">✓ Correct ! +10 points</div>${q.expl}`;
-  } else {
+    if(state.correct===QUIZ.length)state.unlocked.add("mas");
+    const fb=document.getElementById("quiz-feedback");
+    fb.className="feedback-box show good";
+    fb.innerHTML=`<div class="feedback-title">✓ ${t('correct_msg')}</div>${q.expl}`;
+  }else{
     document.getElementById("opt-"+i).classList.add("wrong");
     document.getElementById("opt-"+q.correct).classList.add("correct");
-    const fb = document.getElementById("quiz-feedback");
-    fb.className = "feedback-box show bad";
-    fb.innerHTML = `<div class="feedback-title">✗ Incorrect</div>${q.expl}`;
+    const fb=document.getElementById("quiz-feedback");
+    fb.className="feedback-box show bad";
+    fb.innerHTML=`<div class="feedback-title">✗ ${t('wrong_msg')}</div>${q.expl}`;
   }
   updateStats();
-  const next = document.createElement("div");
-  next.className = "btn-row";
-  next.innerHTML = `<button class="btn primary" onclick="nextQ()">${state.qIdx<QUIZ.length-1?'Question suivante →':'Voir mon score →'}</button>`;
+  const next=document.createElement("div");
+  next.className="btn-row";
+  next.innerHTML=`<button class="btn primary" onclick="nextQ()">${state.qIdx<getQuiz().length-1?t('next_q'):t('see_score')}</button>`;
   document.getElementById("quiz-feedback").appendChild(next);
 }
 
-function nextQ(){
-  state.qIdx++; state.answered=false; renderQuiz();
-}
+function nextQ(){state.qIdx++;state.answered=false;renderQuiz();}
 
 function renderQuizEnd(){
-  const pct = Math.round((state.correct/QUIZ.length)*100);
-  const grade = pct===100?"Parfait !":pct>=80?"Excellent !":pct>=60?"Bien !":"À retravailler";
-  const gradeColor = pct>=80?"var(--tes)":pct>=60?"var(--pro)":"var(--emp)";
-  document.getElementById("quiz-container").innerHTML = `
+  const QUIZ=getQuiz();
+  const pct=Math.round((state.correct/QUIZ.length)*100);
+  const grade=pct===100?(curLang==='ar'?"مثالي!":curLang==='en'?"Perfect!":"Parfait !"):pct>=80?(curLang==='ar'?"ممتاز!":curLang==='en'?"Excellent!":"Excellent !"):pct>=60?(curLang==='ar'?"جيد!":curLang==='en'?"Good!":"Bien !"):curLang==='ar'?"يحتاج مراجعة":curLang==='en'?"Needs work":"À retravailler";
+  const gradeColor=pct>=80?"var(--tes)":pct>=60?"var(--pro)":"var(--emp)";
+  document.getElementById("quiz-container").innerHTML=`
     <div class="result-card">
       <div class="result-score" style="color:${gradeColor}">${pct}%</div>
-      <div class="result-label">${grade} · ${state.correct}/${QUIZ.length} bonnes réponses</div>
+      <div class="result-label">${grade} · ${state.correct}/${QUIZ.length}</div>
       <div class="result-grid">
-        <div class="result-stat"><div class="result-stat-val" style="color:var(--ide)">${state.score}</div><div class="result-stat-lbl">Points</div></div>
-        <div class="result-stat"><div class="result-stat-val" style="color:var(--tes)">${state.unlocked.size}</div><div class="result-stat-lbl">Badges</div></div>
-        <div class="result-stat"><div class="result-stat-val" style="color:var(--pro)">${state.correct}</div><div class="result-stat-lbl">Réussies</div></div>
+        <div class="result-stat"><div class="result-stat-val" style="color:var(--ide)">${state.score}</div><div class="result-stat-lbl" data-t="pts_lbl">${t('pts_lbl')}</div></div>
+        <div class="result-stat"><div class="result-stat-val" style="color:var(--tes)">${state.unlocked.size}</div><div class="result-stat-lbl" data-t="badges_lbl">${t('badges_lbl')}</div></div>
+        <div class="result-stat"><div class="result-stat-val" style="color:var(--pro)">${state.correct}</div><div class="result-stat-lbl" data-t="replies_lbl">${t('replies_lbl')}</div></div>
       </div>
       <div class="btn-row" style="justify-content:center">
-        <button class="btn primary" onclick="resetQuiz()">Recommencer</button>
-        <button class="btn" onclick="showSection('badges',document.querySelector('.nav-tab:nth-child(3)'))">Voir mes badges</button>
+        <button class="btn primary" onclick="resetQuiz()" data-t="restart">${t('restart')}</button>
+        <button class="btn" onclick="showSection('badges',document.querySelectorAll('.nav-tab')[2])" data-t="see_badges">${t('see_badges')}</button>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function resetQuiz(){
-  state.qIdx=0; state.score=0; state.answered=false; state.correct=0; state.unlocked=new Set();
-  updateStats(); renderQuiz();
-}
+function resetQuiz(){state.qIdx=0;state.score=0;state.answered=false;state.correct=0;state.unlocked=new Set();updateStats();renderQuiz();}
 
-// BADGES
 function renderBadges(){
-  document.getElementById("badges-grid").innerHTML = BADGES.map(b=>{
-    const ok = state.unlocked.has(b.id);
+  document.getElementById("badges-grid").innerHTML=getBadges().map(b=>{
+    const ok=state.unlocked.has(b.id);
     return `<div class="badge-card ${ok?'unlocked':'locked'}">
       <div class="badge-icon" style="background:${b.bg}">${b.icon}</div>
       <div class="badge-title">${b.title}</div>
       <div class="badge-desc">${ok?b.desc:b.req}</div>
-      <span class="badge-status ${ok?'ok':'no'}">${ok?'✓ Obtenu':'Verrouillé'}</span>
+      <span class="badge-status ${ok?'ok':'no'}">${ok?'✓ '+(curLang==='ar'?"تم الحصول عليه":curLang==='en'?"Earned":"Obtenu"):curLang==='ar'?"مقفل":curLang==='en'?"Locked":"Verrouillé"}</span>
     </div>`;
   }).join('');
 }
 
-// CASES
 function renderCases(){
-  const nums = ["01","02","03"];
-  document.getElementById("cases-list").innerHTML = CASES.map((c,ci)=>`
+  const nums=["01","02","03"];
+  document.getElementById("cases-list").innerHTML=CASES.map((c,ci)=>`
     <div class="case-item">
       <div class="case-header" onclick="toggleCase(${ci})">
         <div class="case-number" style="background:rgba(255,255,255,0.04);color:${c.color}">${nums[ci]}</div>
-        <div class="case-meta">
-          <div class="case-title">${c.title}</div>
-          <div class="case-domain">${c.domain}</div>
-        </div>
-        <div class="case-tags" style="display:flex;gap:6px;flex-wrap:wrap">
-          ${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
-        </div>
+        <div class="case-meta"><div class="case-title">${c.title}</div><div class="case-domain">${c.domain}</div></div>
+        <div class="case-tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
         <span class="case-chevron ${state.caseOpen===ci?'open':''}">▾</span>
       </div>
       <div class="case-body ${state.caseOpen===ci?'open':''}">
-        <div class="case-problem"><strong>Problème :</strong> ${c.problem}</div>
-        <div class="case-steps">
-          ${c.steps.map(s=>`
-            <div class="case-step">
-              <span class="case-step-badge" style="background:${s.bg};color:${s.col};border:1px solid ${s.col}30">${s.phase}</span>
-              <span class="case-step-text">${s.text}</span>
-            </div>`).join('')}
-        </div>
-        <div class="case-outcome"><strong>Résultat :</strong> ${c.outcome}</div>
+        <div class="case-problem"><strong>${curLang==='ar'?"المشكلة:":curLang==='en'?"Problem:":"Problème :"}</strong> ${c.problem}</div>
+        <div class="case-steps">${c.steps.map(s=>`<div class="case-step"><span class="case-step-badge" style="background:${s.bg};color:${s.col};border:1px solid ${s.col}30">${s.phase}</span><span class="case-step-text">${s.text}</span></div>`).join('')}</div>
+        <div class="case-outcome"><strong>${curLang==='ar'?"النتيجة:":curLang==='en'?"Result:":"Résultat :"}</strong> ${c.outcome}</div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-function toggleCase(ci){
-  state.caseOpen = state.caseOpen===ci ? -1 : ci;
-  renderCases();
-}
+function toggleCase(ci){state.caseOpen=state.caseOpen===ci?-1:ci;renderCases();}
 
 function saveProject(){
-  const saved = document.getElementById("pj-saved");
-  saved.style.display = "block";
-  setTimeout(()=>saved.style.display="none", 3000);
+  const saved=document.getElementById("pj-saved");
+  saved.style.display="block";
+  setTimeout(()=>saved.style.display="none",3000);
 }
 
 // INIT
+setLang('fr');
 renderStepsGrid();
 updateStats();
 </script>
