@@ -328,38 +328,49 @@
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="brand"><div class="logo-dot"></div> DT Lab</div>
-    <div class="sub">Guide Utilisateur · v1.0</div>
+    <div class="sub" id="g-version">Guide Utilisateur · v2.0</div>
+    <div style="display:flex;gap:4px;margin-top:10px;background:var(--bg3);border-radius:8px;padding:3px;width:fit-content">
+      <button onclick="setGuideLang('fr')" id="glbtn-fr" style="padding:4px 10px;border-radius:5px;border:none;background:#185FA5;color:#E6F1FB;font-size:12px;font-weight:700;cursor:pointer">FR</button>
+      <button onclick="setGuideLang('ar')" id="glbtn-ar" style="padding:4px 10px;border-radius:5px;border:none;background:transparent;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer">ع</button>
+      <button onclick="setGuideLang('en')" id="glbtn-en" style="padding:4px 10px;border-radius:5px;border:none;background:transparent;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer">EN</button>
+    </div>
   </div>
 
   <div class="toc-section">
-    <div class="toc-section-title">Introduction</div>
+    <div class="toc-section-title" id="gtoc-intro">Introduction</div>
     <button class="toc-link active" onclick="goToSection('intro', this)">
-      <span class="toc-icon">👋</span> Présentation
+      <span class="toc-icon">👋</span> <span id="glnk-intro">Présentation</span>
     </button>
     <button class="toc-link" onclick="goToSection('acces', this)">
-      <span class="toc-icon">🔑</span> Accès rapide
+      <span class="toc-icon">🔑</span> <span id="glnk-acces">Accès rapide</span>
     </button>
   </div>
 
   <div class="toc-section">
-    <div class="toc-section-title">Modules</div>
+    <div class="toc-section-title" id="gtoc-mod">Modules</div>
     <button class="toc-link" onclick="goToSection('etapes', this)">
-      <span class="num" style="background:rgba(255,107,138,0.15);color:#ff6b8a">1</span> Les 5 étapes
+      <span class="num" style="background:rgba(255,107,138,0.15);color:#ff6b8a">1</span> <span id="glnk-etapes">Les 5 étapes</span>
     </button>
     <button class="toc-link" onclick="goToSection('quiz', this)">
       <span class="num" style="background:rgba(91,143,255,0.15);color:#5b8fff">2</span> Quiz
     </button>
     <button class="toc-link" onclick="goToSection('badges', this)">
-      <span class="num" style="background:rgba(167,139,250,0.15);color:#a78bfa">3</span> Badges
+      <span class="num" style="background:rgba(167,139,250,0.15);color:#a78bfa">3</span> <span id="glnk-badges">Badges</span>
     </button>
     <button class="toc-link" onclick="goToSection('cas', this)">
-      <span class="num" style="background:rgba(251,146,60,0.15);color:#fb923c">4</span> Études de cas
+      <span class="num" style="background:rgba(251,146,60,0.15);color:#fb923c">4</span> <span id="glnk-cas">Études de cas</span>
     </button>
     <button class="toc-link" onclick="goToSection('compare', this)">
-      <span class="num" style="background:rgba(52,211,153,0.15);color:#34d399">5</span> Comparer
+      <span class="num" style="background:rgba(52,211,153,0.15);color:#34d399">5</span> <span id="glnk-compare">Comparer</span>
+    </button>
+    <button class="toc-link" onclick="goToSection('jour3', this)">
+      <span class="num" style="background:rgba(245,158,11,0.15);color:#f59e0b">6</span> <span id="glnk-j3">Jour 3 — BM &amp; GTM</span>
+    </button>
+    <button class="toc-link" onclick="goToSection('jour4', this)">
+      <span class="num" style="background:rgba(236,72,153,0.15);color:#ec4899">7</span> <span id="glnk-j4">Jour 4 — Pitch &amp; Jury</span>
     </button>
     <button class="toc-link" onclick="goToSection('projet', this)">
-      <span class="num" style="background:rgba(167,139,250,0.15);color:#a78bfa">6</span> Mon projet
+      <span class="num" style="background:rgba(167,139,250,0.15);color:#a78bfa">8</span> <span id="glnk-projet">Mon projet</span>
     </button>
   </div>
 
@@ -376,18 +387,28 @@
     </button>
   </div>
 
-  <button class="print-btn" onclick="window.print()">
+  <button class="print-btn" onclick="window.print()" id="g-print-btn">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-    Imprimer / Exporter PDF
+    <span id="g-print-txt">Imprimer / Exporter PDF</span>
   </button>
-  <a href="index.html" style="margin:8px 1rem 0;padding:9px 14px;border-radius:8px;border:1px solid rgba(167,139,250,0.25);background:rgba(167,139,250,0.08);color:#a78bfa;font-family:'DM Sans',sans-serif;font-size:14px;text-decoration:none;display:flex;align-items:center;gap:8px;font-weight:500">
+  <button onclick="goBack()" id="g-back-link" style="margin:8px 1rem 0;padding:9px 14px;border-radius:8px;border:1px solid rgba(167,139,250,0.25);background:rgba(167,139,250,0.08);color:#a78bfa;font-family:'DM Sans',sans-serif;font-size:14px;text-decoration:none;display:flex;align-items:center;gap:8px;font-weight:500;cursor:pointer;width:calc(100% - 2rem)">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg>
-    Retour à la plateforme
-  </a>
+    <span id="g-back-txt">Retour à la plateforme</span>
+  </button>
 </aside>
 
 <!-- CONTENT -->
 <main class="content">
+
+  <!-- LANG BAR -->
+  <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+    <span style="font-size:13px;color:var(--muted)" id="g-lang-label">Langue / Language / اللغة :</span>
+    <div style="display:flex;gap:4px;background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:3px">
+      <button onclick="setGuideLang('fr')" id="gcbtn-fr" style="padding:5px 14px;border-radius:5px;border:none;background:#185FA5;color:#E6F1FB;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s">FR</button>
+      <button onclick="setGuideLang('ar')" id="gcbtn-ar" style="padding:5px 14px;border-radius:5px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s">ع</button>
+      <button onclick="setGuideLang('en')" id="gcbtn-en" style="padding:5px 14px;border-radius:5px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s">EN</button>
+    </div>
+  </div>
 
   <!-- COVER -->
   <div class="cover">
@@ -399,20 +420,20 @@
     <p class="subtitle">Tout ce que vous devez savoir pour maîtriser la plateforme</p>
     <div class="cover-meta">
       <div class="meta-item">
-        <span class="meta-val" style="color:var(--ide)">6</span>
-        <span class="meta-lbl">Modules</span>
+        <span class="meta-val" style="color:var(--ide)" id="g-cov-modules">8</span>
+        <span class="meta-lbl" id="g-cov-mod-lbl">Modules</span>
       </div>
       <div class="meta-item">
-        <span class="meta-val" style="color:var(--tes)">6</span>
-        <span class="meta-lbl">Badges à débloquer</span>
+        <span class="meta-val" style="color:var(--tes)" id="g-cov-badges">8</span>
+        <span class="meta-lbl" id="g-cov-bdg-lbl">Badges à débloquer</span>
       </div>
       <div class="meta-item">
         <span class="meta-val" style="color:var(--pro)">3</span>
-        <span class="meta-lbl">Études de cas</span>
+        <span class="meta-lbl" id="g-cov-cas-lbl">Études de cas</span>
       </div>
       <div class="meta-item">
-        <span class="meta-val" style="color:var(--emp)">60</span>
-        <span class="meta-lbl">Points maximum</span>
+        <span class="meta-val" style="color:var(--emp)">80</span>
+        <span class="meta-lbl" id="g-cov-pts-lbl">Points maximum</span>
       </div>
     </div>
   </div>
@@ -941,16 +962,242 @@
     </table>
   </section>
 
+  <!-- JOUR 3 -->
+  <section class="guide-section" id="jour3">
+    <div class="section-badge" style="background:rgba(245,158,11,0.1);color:#f59e0b">📅 Jour 3</div>
+    <h2 class="section-h j3-title">Jour 3 — Business Model &amp; Go-To-Market</h2>
+    <p class="section-lead j3-lead">Ce module vous apprend à transformer votre solution Design Thinking en un modèle économique viable et une stratégie de mise sur le marché concrète.</p>
+
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:1rem" class="j3-bmc-h">Business Model Canvas — Les 9 blocs</h3>
+
+    <div class="day-block">
+      <div class="bm-row"><div class="bm-dot" style="background:#ff6b8a"></div><div><div class="bm-key">💎 Proposition de valeur</div><div class="bm-val">Le cœur du BMC. Ce que vous offrez de unique. Doit répondre au problème identifié lors de la phase Empathie/Définition. C'est votre différenciateur.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#5b8fff"></div><div><div class="bm-key">👥 Segments clients</div><div class="bm-val">Qui sont vos utilisateurs payants ? Segmentez précisément (étudiants, institutions, PME). Chaque segment peut nécessiter une proposition de valeur différente.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#34d399"></div><div><div class="bm-key">💬 Relation client</div><div class="bm-val">Comment vous interagissez avec les clients : support personnalisé, self-service, communauté en ligne, abonnement, coaching.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#a78bfa"></div><div><div class="bm-key">📢 Canaux de distribution</div><div class="bm-val">Comment vous atteignez vos clients : web, mobile, partenaires académiques, réseaux sociaux, conférences, bouche-à-oreille.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#fb923c"></div><div><div class="bm-key">🤝 Partenaires clés</div><div class="bm-val">Qui peut vous aider à réussir ? Universités, investisseurs, fournisseurs technologiques, collectivités, associations professionnelles.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#f59e0b"></div><div><div class="bm-key">⚙️ Activités clés</div><div class="bm-val">Ce que vous faites concrètement : développement produit, formation, R&D, marketing, support, ventes institutionnelles.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#ec4899"></div><div><div class="bm-key">🏗️ Ressources clés</div><div class="bm-val">Ce dont vous avez besoin : équipe technique, données, infrastructure cloud, capital, propriété intellectuelle.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#e24b4a"></div><div><div class="bm-key">💸 Structure de coûts</div><div class="bm-val">Vos coûts principaux : développement (40%), équipe (35%), marketing (15%), opérations (10%). Identifiez les coûts fixes vs variables.</div></div></div>
+      <div class="bm-row"><div class="bm-dot" style="background:#34d399"></div><div><div class="bm-key">💰 Sources de revenus</div><div class="bm-val">Comment vous gagnez de l'argent : abonnement SaaS, licences institutionnelles, formation certifiante, API, services premium.</div></div></div>
+    </div>
+
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin:1.5rem 0 1rem" class="j3-gtm-h">Stratégie Go-To-Market — 4 phases</h3>
+
+    <div class="grid2">
+      <div class="card"><div class="card-title" style="color:#ff6b8a">Phase 1 — Validation (M1-M3)</div><div class="card-body">50 utilisateurs pilotes dans 2 écoles. Objectif : 80% de satisfaction, 1 cas documenté. Itérez rapidement sur les retours.</div></div>
+      <div class="card"><div class="card-title" style="color:#5b8fff">Phase 2 — Lancement (M4-M6)</div><div class="card-body">Campagne digitale ciblée. 5 partenariats académiques signés. Modèle freemium actif. Objectif : 500 utilisateurs actifs.</div></div>
+      <div class="card"><div class="card-title" style="color:#a78bfa">Phase 3 — Croissance (M7-M12)</div><div class="card-body">Expansion Maghreb. Programme ambassadeurs. Intégration curriculums. Objectif : 5 000 utilisateurs, 50 institutions partenaires.</div></div>
+      <div class="card"><div class="card-title" style="color:#34d399">Phase 4 — Échelle (M13-M24)</div><div class="card-body">Afrique francophone et Moyen-Orient. Levée Série A. Version enterprise. Objectif : 50 000 utilisateurs et rentabilité.</div></div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-title">💡 Conseil clé</div>
+      Commencez par remplir la Proposition de Valeur en premier, puis les Segments Clients. Le reste du Canvas doit cohérer avec ces deux blocs fondateurs.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- JOUR 4 -->
+  <section class="guide-section" id="jour4">
+    <div class="section-badge" style="background:rgba(236,72,153,0.1);color:#ec4899">📅 Jour 4</div>
+    <h2 class="section-h j4-title">Jour 4 — Pitch &amp; Jury</h2>
+    <p class="section-lead j4-lead">Ce module vous prépare à présenter votre projet de façon convaincante devant un jury d'experts : structure, timing, narration et gestion des questions.</p>
+
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:1rem" class="j4-pitch-h">Structure du pitch (10 minutes)</h3>
+
+    <div class="day-block">
+      <div class="pitch-timeline">
+        <div class="pt-item"><div class="pt-dot" style="background:rgba(255,107,138,0.12);color:#ff6b8a">🔥</div><div><div class="pt-time">0:00 – 1:00</div><div class="pt-title">Hook — Accrochez le jury</div><div class="pt-desc">Statistique choc, histoire vraie ou question rhétorique. Le jury doit être capté dès les 10 premières secondes.</div></div></div>
+        <div class="pt-item"><div class="pt-dot" style="background:rgba(91,143,255,0.12);color:#5b8fff">🎯</div><div><div class="pt-time">1:00 – 2:30</div><div class="pt-title">Le Problème — Montrez la douleur</div><div class="pt-desc">Données chiffrées + témoignage utilisateur. Le problème doit sembler urgent et important.</div></div></div>
+        <div class="pt-item"><div class="pt-dot" style="background:rgba(167,139,250,0.12);color:#a78bfa">💡</div><div><div class="pt-time">2:30 – 4:00</div><div class="pt-title">La Solution — Votre réponse unique</div><div class="pt-desc">3 phrases maximum. Démo ou prototype visible. Ce qui vous différencie clairement de l'existant.</div></div></div>
+        <div class="pt-item"><div class="pt-dot" style="background:rgba(245,158,11,0.12);color:#f59e0b">📊</div><div><div class="pt-time">4:00 – 6:00</div><div class="pt-title">Business Model — Votre modèle de revenus</div><div class="pt-desc">Sources de revenus, taille de marché TAM/SAM/SOM, stratégie GTM résumée en 2-3 points.</div></div></div>
+        <div class="pt-item"><div class="pt-dot" style="background:rgba(52,211,153,0.12);color:#34d399">✅</div><div><div class="pt-time">6:00 – 8:00</div><div class="pt-title">Traction — Vos preuves</div><div class="pt-desc">Tests utilisateurs, premiers clients, partenariats signés. La traction est la preuve que votre solution fonctionne réellement.</div></div></div>
+        <div class="pt-item"><div class="pt-dot" style="background:rgba(236,72,153,0.12);color:#ec4899">🚀</div><div><div class="pt-time">8:00 – 10:00</div><div class="pt-title">Équipe &amp; Appel à l'action</div><div class="pt-desc">Présentez l'équipe et ses forces. Terminez par un appel à l'action clair, précis et mémorable.</div></div></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin:1.5rem 0 1rem" class="j4-jury-h">Critères d'évaluation du jury</h3>
+
+    <table class="guide-table">
+      <thead><tr><th>Critère</th><th>Description</th><th>Points</th></tr></thead>
+      <tbody>
+        <tr><td>🎯 Pertinence du problème</td><td>Le problème est-il réel, important et bien documenté ?</td><td style="color:#ff6b8a;font-weight:600">20 pts</td></tr>
+        <tr><td>💡 Innovation de la solution</td><td>La solution est-elle originale et différenciée ?</td><td style="color:#a78bfa;font-weight:600">18 pts</td></tr>
+        <tr><td>📊 Viabilité économique</td><td>Le modèle économique est-il réaliste et scalable ?</td><td style="color:#f59e0b;font-weight:600">17 pts</td></tr>
+        <tr><td>✅ Validation / Traction</td><td>Y a-t-il des preuves concrètes que ça marche ?</td><td style="color:#34d399;font-weight:600">16 pts</td></tr>
+        <tr><td>🎤 Qualité de présentation</td><td>Clarté, timing, storytelling, slides, réponses Q&A</td><td style="color:#5b8fff;font-weight:600">15 pts</td></tr>
+        <tr><td>👥 Compétences de l'équipe</td><td>L'équipe est-elle capable d'exécuter ce projet ?</td><td style="color:#fb923c;font-weight:600">14 pts</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin:1.5rem 0 1rem" class="j4-tips-h">Conseils clés pour convaincre</h3>
+
+    <div class="grid2">
+      <div class="card"><div class="card-title">⏱️ Respectez le timing</div><div class="card-body">Entraînez-vous 3 fois avec chronomètre avant le jour J. Dépasser le temps alloué pénalise directement votre score jury.</div></div>
+      <div class="card"><div class="card-title">📖 Racontez une histoire</div><div class="card-body">Commencez toujours par votre persona réel. Le jury doit ressentir le problème émotionnellement avant d'entendre votre solution.</div></div>
+      <div class="card"><div class="card-title">🔢 Utilisez des chiffres</div><div class="card-body">Chaque affirmation clé doit être soutenue par un chiffre précis. « Beaucoup de gens » ne convainc pas, « 73% des utilisateurs » oui.</div></div>
+      <div class="card"><div class="card-title">🤔 Anticipez les questions</div><div class="card-body">Préparez des réponses à : « Pourquoi vous ? », « Avantage concurrentiel ? », « Plan B si X échoue ? », « Taille de votre marché ? »</div></div>
+    </div>
+
+    <div class="callout success">
+      <div class="callout-title">✅ Structure des 10 slides</div>
+      Titre &amp; tagline → Problème → Solution → Démo → Marché → Business Model → Go-To-Market → Traction → Équipe → Appel à l'action. Maximum 10 slides, texte minimal, visuels forts.
+    </div>
+  </section>
+
+  <hr class="divider">
+
   <!-- FOOTER -->
-  <div class="guide-footer">
+  <div class="guide-footer" id="g-footer">
     <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">Design Thinking Lab</div>
-    <div>Guide Utilisateur v1.0 · Plateforme pédagogique pour élèves ingénieurs</div>
+    <div id="g-footer-txt">Guide Utilisateur v2.0 · Plateforme pédagogique pour élèves ingénieurs</div>
     <div style="margin-top:6px">Méthode Design Thinking · IDEO · d.school Stanford · Adaptation Maroc</div>
   </div>
 
 </main>
 
+<!-- JOUR 3 SECTION (appended after main for scroll) -->
+<style>
+  .guide-section{scroll-margin-top:2rem}
+  .day-block{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem}
+  .day-block-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
+  .day-block-body{font-size:15px;color:var(--muted);line-height:1.75}
+  .bm-row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+  .bm-row:last-child{border-bottom:none}
+  .bm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px}
+  .bm-key{font-size:14px;font-weight:500;color:var(--text);min-width:140px}
+  .bm-val{font-size:14px;color:var(--muted);line-height:1.5}
+  .pitch-timeline{display:flex;flex-direction:column;gap:0}
+  .pt-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+  .pt-item:last-child{border-bottom:none}
+  .pt-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+  .pt-time{font-size:12px;font-weight:600;color:var(--ide);margin-bottom:3px}
+  .pt-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+  .pt-desc{font-size:13px;color:var(--muted);line-height:1.5}
+</style>
+
 <script>
+const GL = {
+  fr:{
+    version:"Guide Utilisateur · v2.0",
+    toc_intro:"Introduction",lnk_intro:"Présentation",lnk_acces:"Accès rapide",
+    toc_mod:"Modules",lnk_etapes:"Les 5 étapes",lnk_badges:"Badges",lnk_cas:"Études de cas",
+    lnk_compare:"Comparer",lnk_j3:"Jour 3 — BM & GTM",lnk_j4:"Jour 4 — Pitch & Jury",lnk_projet:"Mon projet",
+    toc_ref:"Référence",
+    cov_mod:"Modules",cov_bdg:"Badges à débloquer",cov_cas:"Études de cas",cov_pts:"Points maximum",
+    footer:"Guide Utilisateur v2.0 · Plateforme pédagogique pour élèves ingénieurs",
+    j3_title:"Jour 3 — Business Model & Go-To-Market",
+    j3_lead:"Ce module vous apprend à transformer votre solution Design Thinking en un modèle économique viable et une stratégie de mise sur le marché concrète.",
+    bmc_h:"Business Model Canvas — Les 9 blocs",
+    gtm_h:"Stratégie Go-To-Market — Les 4 phases",
+    j4_title:"Jour 4 — Pitch & Jury",
+    j4_lead:"Ce module vous prépare à présenter votre projet de façon convaincante devant un jury d'experts. Structure, timing, narration et gestion des questions.",
+    pitch_h:"Structure du pitch (10 minutes)",
+    jury_h:"Critères d'évaluation du jury",
+    tips_h:"Conseils clés pour convaincre",
+  },
+  ar:{
+    version:"دليل المستخدم · الإصدار 2.0",
+    toc_intro:"مقدمة",lnk_intro:"تعريف",lnk_acces:"وصول سريع",
+    toc_mod:"الوحدات",lnk_etapes:"المراحل الخمس",lnk_badges:"الشارات",lnk_cas:"دراسات الحالة",
+    lnk_compare:"مقارنة",lnk_j3:"اليوم 3 — نموذج الأعمال",lnk_j4:"اليوم 4 — العرض والتحكيم",lnk_projet:"مشروعي",
+    toc_ref:"مرجع",
+    cov_mod:"وحدات",cov_bdg:"شارات للفتح",cov_cas:"دراسات الحالة",cov_pts:"النقاط القصوى",
+    footer:"دليل المستخدم v2.0 · منصة تعليمية لطلاب الهندسة",
+    j3_title:"اليوم 3 — نموذج الأعمال والذهاب إلى السوق",
+    j3_lead:"تعلم في هذه الوحدة كيف تحول حل التفكير التصميمي إلى نموذج اقتصادي قابل للتطبيق واستراتيجية سوقية ملموسة.",
+    bmc_h:"مخطط نموذج الأعمال — البنود التسعة",
+    gtm_h:"استراتيجية الذهاب إلى السوق — 4 مراحل",
+    j4_title:"اليوم 4 — العرض والتحكيم",
+    j4_lead:"تستعد في هذه الوحدة لتقديم مشروعك بشكل مقنع أمام لجنة من الخبراء: الهيكل، التوقيت، السرد وإدارة الأسئلة.",
+    pitch_h:"هيكل العرض التقديمي (10 دقائق)",
+    jury_h:"معايير تقييم لجنة التحكيم",
+    tips_h:"نصائح أساسية للإقناع",
+  },
+  en:{
+    version:"User Guide · v2.0",
+    toc_intro:"Introduction",lnk_intro:"Overview",lnk_acces:"Quick access",
+    toc_mod:"Modules",lnk_etapes:"The 5 steps",lnk_badges:"Badges",lnk_cas:"Case studies",
+    lnk_compare:"Compare",lnk_j3:"Day 3 — BM & GTM",lnk_j4:"Day 4 — Pitch & Jury",lnk_projet:"My project",
+    toc_ref:"Reference",
+    cov_mod:"Modules",cov_bdg:"Badges to unlock",cov_cas:"Case studies",cov_pts:"Maximum points",
+    footer:"User Guide v2.0 · Educational platform for engineering students",
+    j3_title:"Day 3 — Business Model & Go-To-Market",
+    j3_lead:"This module teaches you to transform your Design Thinking solution into a viable business model and a concrete go-to-market strategy.",
+    bmc_h:"Business Model Canvas — The 9 blocks",
+    gtm_h:"Go-To-Market Strategy — 4 phases",
+    j4_title:"Day 4 — Pitch & Jury",
+    j4_lead:"This module prepares you to present your project convincingly before a panel of experts: structure, timing, storytelling and Q&A management.",
+    pitch_h:"Pitch structure (10 minutes)",
+    jury_h:"Jury evaluation criteria",
+    tips_h:"Key tips to convince",
+  }
+};
+
+let gLang='fr';
+
+function setGuideLang(l){
+  gLang=l;
+  document.documentElement.lang=l;
+  document.documentElement.dir=l==='ar'?'rtl':'ltr';
+
+  // sync ALL lang buttons (sidebar + content bar)
+  ['fr','ar','en'].forEach(x=>{
+    ['glbtn-','gcbtn-'].forEach(pfx=>{
+      const b=document.getElementById(pfx+x);
+      if(b){
+        const isActive=x===l;
+        b.style.background=isActive?'#185FA5':'transparent';
+        b.style.color=isActive?'#E6F1FB':'var(--muted)';
+      }
+    });
+  });
+
+  const g=GL[l]||GL.fr;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+
+  // sidebar texts
+  set('g-version',g.version);
+  set('gtoc-intro',g.toc_intro);set('glnk-intro',g.lnk_intro);set('glnk-acces',g.lnk_acces);
+  set('gtoc-mod',g.toc_mod);set('glnk-etapes',g.lnk_etapes);set('glnk-badges',g.lnk_badges);set('glnk-cas',g.lnk_cas);
+  set('glnk-compare',g.lnk_compare);set('glnk-j3',g.lnk_j3);set('glnk-j4',g.lnk_j4);set('glnk-projet',g.lnk_projet);
+
+  // cover stats labels
+  set('g-cov-mod-lbl',g.cov_mod);set('g-cov-bdg-lbl',g.cov_bdg);set('g-cov-cas-lbl',g.cov_cas);set('g-cov-pts-lbl',g.cov_pts);
+
+  // footer & util
+  set('g-footer-txt',g.footer);
+  set('g-print-txt',l==='ar'?'طباعة / تصدير PDF':l==='en'?'Print / Export PDF':'Imprimer / Exporter PDF');
+  set('g-back-txt',l==='ar'?'العودة إلى المنصة':l==='en'?'Back to platform':'Retour à la plateforme');
+
+  // jour 3 & 4 section headings
+  renderJ3Section(g);renderJ4Section(g);
+}
+
+function renderJ3Section(g){
+  const el=document.getElementById('jour3');if(!el)return;
+  el.querySelector('.j3-title').textContent=g.j3_title;
+  el.querySelector('.j3-lead').textContent=g.j3_lead;
+  el.querySelector('.j3-bmc-h').textContent=g.bmc_h;
+  el.querySelector('.j3-gtm-h').textContent=g.gtm_h;
+}
+function renderJ4Section(g){
+  const el=document.getElementById('jour4');if(!el)return;
+  el.querySelector('.j4-title').textContent=g.j4_title;
+  el.querySelector('.j4-lead').textContent=g.j4_lead;
+  el.querySelector('.j4-pitch-h').textContent=g.pitch_h;
+  el.querySelector('.j4-jury-h').textContent=g.jury_h;
+  el.querySelector('.j4-tips-h').textContent=g.tips_h;
+}
+
+function goBack(){
+  const cur = (window.top || window).location.href;
+  const base = cur.substring(0, cur.lastIndexOf('/') + 1);
+  (window.top || window).location.href = base + 'index.html';
+}
+
 function goToSection(id, btn){
   const el = document.getElementById(id);
   if(el){
@@ -971,9 +1218,9 @@ const observer = new IntersectionObserver((entries)=>{
       });
     }
   });
-},{threshold:0.3, rootMargin:'-60px 0px 0px 0px'});
+},{threshold:0.2, rootMargin:'-60px 0px 0px 0px'});
 
-['intro','acces','etapes','quiz','badges','cas','compare','projet','scoring','faq','glossaire'].forEach(id=>{
+['intro','acces','etapes','quiz','badges','cas','compare','jour3','jour4','projet','scoring','faq','glossaire'].forEach(id=>{
   const el = document.getElementById(id);
   if(el) observer.observe(el);
 });
