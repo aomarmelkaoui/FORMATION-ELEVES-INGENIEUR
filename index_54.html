@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Thinking Lab — Plateforme Éducative</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --card: #1a1a24;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0eff8;
+    --muted: #8885a0;
+    --dim: #4a4860;
+
+    --emp: #ff6b8a;
+    --emp-bg: rgba(255,107,138,0.08);
+    --def: #5b8fff;
+    --def-bg: rgba(91,143,255,0.08);
+    --ide: #a78bfa;
+    --ide-bg: rgba(167,139,250,0.08);
+    --pro: #fb923c;
+    --pro-bg: rgba(251,146,60,0.08);
+    --tes: #34d399;
+    --tes-bg: rgba(52,211,153,0.08);
+
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 2px; }
+
+  /* HEADER */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    height: 60px;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 22px;
+    color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--emp);
+    box-shadow: 0 0 12px var(--emp);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .nav-tabs {
+    display: flex; gap: 4px; margin-left: auto;
+  }
+  .nav-tab {
+    padding: 6px 16px; border-radius: 6px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--card); }
+  .nav-tab.active { color: var(--text); background: var(--card); border-color: var(--border2); }
+  .nav-tab svg { width: 15px; height: 15px; }
+
+  .score-pill {
+    margin-left: auto;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    font-size: 14px; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text);
+  }
+  .score-pill span { color: var(--ide); font-size: 16px; font-weight: 600; }
+
+  /* LAYOUT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+  /* SECTIONS */
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* HERO */
+  .hero {
+    text-align: center; padding: 3rem 0 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; border-radius: 20px;
+    background: var(--ide-bg);
+    border: 1px solid rgba(167,139,250,0.2);
+    color: var(--ide); font-size: 14px; font-weight: 500;
+    margin-bottom: 1.25rem;
+    animation: fadeIn 0.5s ease;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 800; line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #f0eff8 0%, var(--ide) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: var(--muted); max-width: 500px; margin: 0 auto 2rem;
+    font-size: 18px; line-height: 1.7;
+  }
+
+  /* FLOW */
+  .flow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .flow-step {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 18px; border-radius: 30px;
+    border: 1px solid var(--border2);
+    background: var(--card);
+    cursor: pointer; transition: all 0.2s;
+    font-size: 15px; font-weight: 500;
+    color: var(--muted);
+  }
+  .flow-step:hover { border-color: var(--border2); color: var(--text); transform: translateY(-1px); }
+  .flow-step.active { color: var(--text); border-color: currentColor; }
+  .flow-step.done .step-num { background: var(--tes); color: var(--bg); }
+  .step-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--bg3); font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .flow-arrow { color: var(--dim); font-size: 14px; }
+
+  /* STEP CARDS */
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem; }
+  .step-detail { background: var(--card); padding: 1.75rem; transition: background 0.2s; }
+  .step-detail:hover { background: var(--bg3); }
+  .step-detail.span2 { grid-column: span 2; }
+  .step-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1rem; }
+  .step-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .step-label { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .step-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); }
+  .step-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+  .step-example {
+    padding: 12px 16px; border-radius: var(--radius-sm);
+    font-size: 15px; line-height: 1.6;
+    border-left: 2px solid currentColor;
+    background: var(--bg3);
+    margin-bottom: 1.25rem;
+  }
+  .tools-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tool-chip {
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 14px; font-weight: 500;
+    background: var(--bg2); border: 1px solid var(--border2);
+    color: var(--muted); cursor: pointer; transition: all 0.2s;
+  }
+  .tool-chip:hover { color: var(--text); border-color: currentColor; }
+
+  /* QUIZ */
+  .quiz-wrap { max-width: 680px; margin: 0 auto; }
+  .quiz-progress {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 2rem;
+  }
+  .q-bar { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .q-bar-fill { height: 100%; background: var(--ide); border-radius: 2px; transition: width 0.4s ease; }
+  .q-label { font-size: 13px; color: var(--muted); min-width: 60px; text-align: right; }
+
+  .quiz-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); padding: 2rem; }
+  .quiz-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 6px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .quiz-question {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 600; line-height: 1.4;
+    color: var(--text); margin-bottom: 1.5rem;
+  }
+  .opt {
+    width: 100%; text-align: left; padding: 14px 18px;
+    border-radius: var(--radius-sm); border: 1px solid var(--border2);
+    background: var(--bg2); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 16px;
+    cursor: pointer; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
+    transition: all 0.2s;
+  }
+  .opt:hover:not(.locked) { border-color: var(--ide); background: rgba(167,139,250,0.04); }
+  .opt.correct { border-color: var(--tes); background: rgba(52,211,153,0.08); }
+  .opt.wrong { border-color: var(--emp); background: rgba(255,107,138,0.08); }
+  .opt.locked { cursor: default; }
+  .opt-letter {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: var(--bg3); border: 1px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .feedback-box {
+    padding: 16px; border-radius: var(--radius-sm);
+    font-size: 15px; line-height: 1.6; margin-top: 1rem;
+    display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.good { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: #6ee7b7; }
+  .feedback-box.bad { background: rgba(255,107,138,0.08); border: 1px solid rgba(255,107,138,0.2); color: #fca5a5; }
+  .feedback-title { font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+
+  .btn {
+    padding: 11px 24px; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; border: 1px solid var(--border2);
+    background: var(--card); color: var(--text);
+  }
+  .btn:hover { background: var(--bg3); border-color: var(--border2); }
+  .btn.primary { background: var(--ide); border-color: var(--ide); color: #1a1030; }
+  .btn.primary:hover { opacity: 0.88; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.25rem; }
+
+  /* RESULT */
+  .result-card { text-align: center; padding: 3rem 2rem; background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); }
+  .result-score { font-family: 'Syne', sans-serif; font-size: 5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; }
+  .result-label { font-size: 14px; color: var(--muted); margin-bottom: 2rem; }
+  .result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 360px; margin: 0 auto 2rem; }
+  .result-stat { background: var(--bg2); border-radius: var(--radius-sm); padding: 1rem; }
+  .result-stat-val { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; }
+  .result-stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* BADGES */
+  .badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 12px; }
+  .badge-card {
+    background: var(--card); border-radius: var(--radius);
+    border: 1px solid var(--border); padding: 1.5rem 1rem;
+    text-align: center; transition: all 0.25s;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .badge-card.unlocked { border-color: var(--tes); }
+  .badge-card.unlocked:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(52,211,153,0.12); }
+  .badge-card.locked { opacity: 0.4; filter: grayscale(1); }
+  .badge-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .badge-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
+  .badge-desc { font-size: 13px; color: var(--muted); line-height: 1.4; }
+  .badge-status {
+    padding: 3px 10px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  }
+  .badge-status.ok { background: rgba(52,211,153,0.12); color: var(--tes); }
+  .badge-status.no { background: var(--bg3); color: var(--dim); }
+
+  /* CASES */
+  .cases-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; }
+  .case-item { background: var(--card); }
+  .case-header {
+    padding: 1.5rem; cursor: pointer; display: flex; align-items: center; gap: 14px;
+    transition: background 0.2s;
+  }
+  .case-header:hover { background: var(--bg3); }
+  .case-number {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .case-meta { flex: 1; }
+  .case-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .case-domain { font-size: 14px; color: var(--muted); }
+  .case-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag {
+    padding: 3px 10px; border-radius: 4px; font-size: 13px; font-weight: 500;
+    background: var(--bg3); border: 1px solid var(--border2); color: var(--muted);
+  }
+  .case-chevron { color: var(--dim); font-size: 18px; transition: transform 0.2s; }
+  .case-chevron.open { transform: rotate(180deg); }
+
+  .case-body { display: none; padding: 0 1.5rem 1.5rem; }
+  .case-body.open { display: block; }
+  .case-problem {
+    padding: 14px 16px; border-radius: var(--radius-sm);
+    background: var(--bg2); border: 1px solid var(--border);
+    font-size: 15px; color: var(--muted); line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .case-problem strong { color: var(--emp); font-weight: 500; }
+  .case-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
+  .case-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 14px; background: var(--bg2); border-radius: var(--radius-sm);
+  }
+  .case-step-badge {
+    padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600;
+    white-space: nowrap; flex-shrink: 0; margin-top: 1px;
+  }
+  .case-step-text { font-size: 15px; color: var(--muted); line-height: 1.5; }
+  .case-outcome {
+    padding: 14px 16px; border-radius: var(--radius-sm);
+    background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.15);
+    font-size: 15px; color: #6ee7b7; line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .case-outcome strong { font-weight: 600; }
+
+  /* COMPARE */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+  .compare-col { background: var(--card); padding: 1.75rem; }
+  .compare-col.featured { background: rgba(91,143,255,0.04); }
+  .compare-col-head { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
+  .compare-icon { font-size: 28px; }
+  .compare-name { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--text); }
+  .compare-sub { font-size: 14px; color: var(--muted); margin-top: 2px; }
+  .compare-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+  }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+  .compare-key { font-size: 15px; font-weight: 500; color: var(--text); }
+  .compare-val { font-size: 14px; color: var(--muted); line-height: 1.4; }
+
+  /* PROJECT */
+  .project-wrap { max-width: 680px; margin: 0 auto; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label { font-size: 15px; font-weight: 500; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .form-label span { color: var(--ide); }
+  textarea {
+    width: 100%; background: var(--card); border: 1px solid var(--border2);
+    border-radius: var(--radius-sm); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 16px; padding: 12px 14px;
+    resize: vertical; min-height: 90px; transition: border-color 0.2s;
+    outline: none;
+  }
+  textarea:focus { border-color: var(--ide); }
+  textarea::placeholder { color: var(--dim); }
+
+  /* SECTION HEADERS */
+  .section-header { margin-bottom: 2rem; }
+  .section-header h2 {
+    font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .section-header p { color: var(--muted); font-size: 17px; }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    .main { padding: 1rem; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .step-detail.span2 { grid-column: 1; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .result-grid { grid-template-columns: 1fr; max-width: 200px; }
+    .nav-tabs { gap: 2px; }
+    .nav-tab { padding: 5px 10px; font-size: 12px; }
+    .header { padding: 0 1rem; gap: 8px; }
+    .score-pill { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-dot"></div>
+    DT Lab
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('accueil',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg>
+      Accueil
+    </button>
+    <button class="nav-tab" onclick="showSection('quiz',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Quiz
+    </button>
+    <button class="nav-tab" onclick="showSection('badges',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-5 3 1.5-5.5L4 8.5l5.5-.5L12 3l2.5 5 5.5.5-4.5 4L17 18z"/></svg>
+      Badges
+    </button>
+    <button class="nav-tab" onclick="showSection('cases',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2"/><path d="M8 7V5a2 2 0 00-4 0v2"/></svg>
+      Cas
+    </button>
+    <button class="nav-tab" onclick="showSection('compare',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      Comparer
+    </button>
+    <button class="nav-tab" onclick="showSection('projet',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+      Mon projet
+    </button>
+  </nav>
+  <a href="guide.html" style="padding:6px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#8885a0;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;transition:all 0.2s;white-space:nowrap" onmouseover="this.style.color='#f0eff8';this.style.background='#1a1a24'" onmouseout="this.style.color='#8885a0';this.style.background='transparent'">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+    Guide utilisateur
+  </a>
+  <div class="score-pill">Score <span id="score-display">0</span> pts</div>
+</header>
+
+<main class="main">
+
+<!-- ACCUEIL -->
+<section id="sec-accueil" class="section active">
+  <div class="hero">
+    <div class="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Plateforme pédagogique · Élèves ingénieurs
+    </div>
+    <h1>Design Thinking<br>Interactif</h1>
+    <p>Maîtrisez les 5 étapes de la méthode centrée utilisateur. Quiz, badges, cas réels d'ingénierie.</p>
+
+    <div class="flow" id="flow-pills">
+      <div class="flow-step active" style="color:var(--emp)" data-idx="0" onclick="goStep(0)">
+        <span class="step-num" style="background:var(--emp-bg);color:var(--emp)">1</span> Empathie
+      </div>
+      <span class="flow-arrow">›</span>
+      <div class="flow-step" style="color:var(--def)" data-idx="1" onclick="goStep(1)">
+        <span class="step-num">2</span> Définition
+      </div>
+      <span class="flow-arrow">›</span>
+      <div class="flow-step" style="color:var(--ide)" data-idx="2" onclick="goStep(2)">
+        <span class="step-num">3</span> Idéation
+      </div>
+      <span class="flow-arrow">›</span>
+      <div class="flow-step" style="color:var(--pro)" data-idx="3" onclick="goStep(3)">
+        <span class="step-num">4</span> Prototype
+      </div>
+      <span class="flow-arrow">›</span>
+      <div class="flow-step" style="color:var(--tes)" data-idx="4" onclick="goStep(4)">
+        <span class="step-num">5</span> Test
+      </div>
+    </div>
+  </div>
+
+  <div class="steps-grid" id="steps-grid"></div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--ide)" id="stat-score">0</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">Points accumulés</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--tes)" id="stat-badges">0/6</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">Badges débloqués</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--pro)" id="stat-correct">0/6</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">Questions réussies</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;cursor:pointer" onclick="showSection('quiz',document.querySelector('.nav-tab:nth-child(2)'))">
+      <div style="font-size:32px;font-weight:800;font-family:'Syne',sans-serif;color:var(--emp)">6</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">Questions disponibles →</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="sec-quiz" class="section">
+  <div class="quiz-wrap">
+    <div class="section-header">
+      <h2>Quiz Design Thinking</h2>
+      <p>6 questions contextualisées pour l'ingénierie marocaine</p>
+    </div>
+    <div id="quiz-container"></div>
+  </div>
+</section>
+
+<!-- BADGES -->
+<section id="sec-badges" class="section">
+  <div class="section-header">
+    <h2>Mes badges</h2>
+    <p>Débloqués en réussissant les questions du quiz</p>
+  </div>
+  <div class="badges-grid" id="badges-grid"></div>
+</section>
+
+<!-- CAS -->
+<section id="sec-cases" class="section">
+  <div class="section-header">
+    <h2>Études de cas</h2>
+    <p>Projets réels d'ingénierie appliqués au Design Thinking</p>
+  </div>
+  <div class="cases-list" id="cases-list"></div>
+</section>
+
+<!-- COMPARER -->
+<section id="sec-compare" class="section">
+  <div class="section-header">
+    <h2>Design Thinking vs Lean Startup</h2>
+    <p>Deux approches complémentaires pour l'innovation</p>
+  </div>
+  <div class="compare-grid">
+    <div class="compare-col featured">
+      <div class="compare-col-head">
+        <span class="compare-icon">🎯</span>
+        <div>
+          <div class="compare-name" style="color:var(--def)">Design Thinking</div>
+          <div class="compare-sub">Approche centrée utilisateur</div>
+        </div>
+      </div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Focus principal</div><div class="compare-val">Besoins et émotions humains</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Objectif</div><div class="compare-val">Innovation créative et UX</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Prototype</div><div class="compare-val">Maquettes et tests qualitatifs</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Itération</div><div class="compare-val">Retours utilisateurs riches</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--def)"></div><div><div class="compare-key">Idéal pour</div><div class="compare-val">Produits complexes, services publics, éducation</div></div></div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-col-head">
+        <span class="compare-icon">🚀</span>
+        <div>
+          <div class="compare-name" style="color:var(--pro)">Lean Startup</div>
+          <div class="compare-sub">Validation économique rapide</div>
+        </div>
+      </div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Focus principal</div><div class="compare-val">Viabilité du modèle économique</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Objectif</div><div class="compare-val">Optimisation et métriques</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Prototype</div><div class="compare-val">MVP — version minimale fonctionnelle</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Itération</div><div class="compare-val">A/B tests, analytics, data-driven</div></div></div>
+      <div class="compare-row"><div class="compare-dot" style="background:var(--pro)"></div><div><div class="compare-key">Idéal pour</div><div class="compare-val">Startups, SaaS, produits numériques</div></div></div>
+    </div>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+    <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--ide);margin-bottom:10px">En pratique, les deux se combinent</div>
+    <div style="font-size:14px;color:var(--muted);line-height:1.7">
+      Le Design Thinking permet de comprendre le besoin humain et concevoir une solution pertinente.
+      Le Lean Startup permet ensuite de tester rapidement la viabilité économique avec un MVP.
+      Cette combinaison est devenue le standard des projets technologiques innovants dans les startups et les grands groupes.
+    </div>
+  </div>
+</section>
+
+<!-- PROJET -->
+<section id="sec-projet" class="section">
+  <div class="project-wrap">
+    <div class="section-header">
+      <h2>Mon projet</h2>
+      <p>Appliquez la méthode à votre propre projet d'ingénierie</p>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem">
+      <div class="form-group">
+        <div class="form-label"><span>01</span> Qui est votre utilisateur cible ?</div>
+        <textarea id="pj-user" placeholder="Décrivez votre utilisateur : profil, contexte, besoins, frustrations quotidiennes..."></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-label"><span>02</span> Quel est le problème central ?</div>
+        <textarea id="pj-problem" placeholder="[Utilisateur] a besoin de [besoin] parce que [insight]..."></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-label"><span>03</span> Vos 3 meilleures idées</div>
+        <textarea id="pj-ideas" placeholder="Idée 1 : ...&#10;Idée 2 : ...&#10;Idée 3 : ..."></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-label"><span>04</span> Type de prototype envisagé</div>
+        <textarea id="pj-proto" placeholder="Maquette papier, wireframe Figma, application web, chatbot, dashboard..."></textarea>
+      </div>
+      <div id="pj-saved" style="display:none;margin-bottom:12px;padding:10px 14px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);border-radius:var(--radius-sm);font-size:13px;color:var(--tes)">
+        ✓ Projet sauvegardé dans cette session
+      </div>
+      <div class="btn-row">
+        <button class="btn primary" onclick="saveProject()">Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const STEPS = [
+  {
+    key:"emp", color:"var(--emp)", bg:"var(--emp-bg)",
+    icon:"❤️", num:"01",
+    label:"Étape 1",
+    name:"Empathie",
+    desc:"Observer, interviewer et se mettre à la place de l'utilisateur pour découvrir ses besoins réels, ses frustrations et ses attentes cachées.",
+    example:"Projet formation IA rurale : accès Internet, niveau numérique, langue dominante, contraintes matérielles.",
+    tools:["Interviews","Observation terrain","Carte d'empathie","Personas","Journal de bord"]
+  },
+  {
+    key:"def", color:"var(--def)", bg:"var(--def-bg)",
+    icon:"🎯", num:"02",
+    label:"Étape 2",
+    name:"Définition",
+    desc:"Synthétiser les données collectées pour formuler un problème central précis, orienté utilisateur, qui guidera tout le processus.",
+    example:'"Ahmed, étudiant en GI, a besoin d\'accéder aux ressources hors ligne parce que le campus a une connexion instable."',
+    tools:["POV statement","Diagramme d'affinité","HMW questions","Arbre des problèmes"]
+  },
+  {
+    key:"ide", color:"var(--ide)", bg:"var(--ide-bg)",
+    icon:"🧠", num:"03",
+    label:"Étape 3",
+    name:"Idéation",
+    desc:"Explorer librement toutes les solutions possibles sans jugement. La quantité prime sur la qualité pour stimuler la créativité.",
+    example:"Atelier 2h → 45 idées → vote → top 3 → approfondissement avec le client.",
+    tools:["Brainstorming","Mind mapping","SCAMPER","Worst Possible Idea","Atelier collaboratif"]
+  },
+  {
+    key:"pro", color:"var(--pro)", bg:"var(--pro-bg)",
+    icon:"🔧", num:"04",
+    label:"Étape 4",
+    name:"Prototype",
+    desc:"Construire des représentations rapides et peu coûteuses des idées retenues pour les rendre testables. Apprendre, pas perfectionner.",
+    example:"Maquette papier du dashboard + Arduino simulant 3 capteurs → testé en 2 jours.",
+    tools:["Maquette papier","Wireframes Figma","Storyboard","MVP numérique","Prototype physique"]
+  },
+  {
+    key:"tes", color:"var(--tes)", bg:"var(--tes-bg)",
+    icon:"🧪", num:"05",
+    label:"Étape 5",
+    name:"Test",
+    desc:"Soumettre le prototype aux utilisateurs réels pour observer leurs réactions, recueillir leurs retours et identifier ce qui doit être amélioré.",
+    example:"Test pilote 10 utilisateurs → retours qualitatifs → itération → amélioration navigation -40% erreurs.",
+    tools:["Tests utilisateurs","Think-aloud","Grille d'évaluation","Heatmaps","Plan d'itération"]
+  }
+];
+
+const QUIZ = [
+  {
+    q:"Un étudiant observe que les agriculteurs marocains perdent du temps à irriguer manuellement. Quelle est la première étape du Design Thinking ?",
+    opts:["Créer un prototype d'application mobile","Définir le problème avec une formulation POV","Aller interviewer les agriculteurs sur le terrain","Brainstormer des solutions technologiques"],
+    correct:2, expl:"L'Empathie vient en premier : comprendre les besoins réels via l'observation et les interviews avant toute solution.", step:"Empathie", badge:"emp"
+  },
+  {
+    q:"Vous avez collecté 40 retours d'étudiants en ingénierie. Quelle formulation POV est correcte ?",
+    opts:["L'application doit avoir une interface moderne","Les étudiants ont besoin d'une app de cours","Ahmed, étudiant en GI, a besoin d'accéder aux ressources hors ligne parce que le campus a une connexion instable","Il faut développer une plateforme e-learning responsive"],
+    correct:2, expl:"Un bon POV cite l'utilisateur précis, son besoin et l'insight (la raison profonde). Les autres formulations sont trop génériques.", step:"Définition", badge:"def"
+  },
+  {
+    q:"En session d'idéation, un membre dit « cette idée de chatbot IA est irréaliste ». Quelle est la bonne réaction ?",
+    opts:["Accepter la critique et supprimer l'idée","Reporter le jugement — toutes les idées sont valides à ce stade","Voter immédiatement pour les meilleures idées","Passer directement au prototypage"],
+    correct:1, expl:"En idéation, la règle fondamentale est de différer le jugement. La quantité prime sur la qualité. On filtre seulement après.", step:"Idéation", badge:"ide"
+  },
+  {
+    q:"Pour tester rapidement un système hydroponique connecté, quel prototype est le plus approprié ?",
+    opts:["Développer l'application complète avec toutes les fonctions","Écrire une documentation technique de 50 pages","Créer une maquette papier du dashboard + simulation manuelle des données","Attendre d'avoir le matériel réel pour commencer"],
+    correct:2, expl:"Le prototype doit être rapide et peu coûteux. Une maquette papier permet de tester les interactions sans investissement technique majeur.", step:"Prototype", badge:"pro"
+  },
+  {
+    q:"Après le test d'une plateforme éducative, 4 utilisateurs sur 5 trouvent la navigation confuse. Que faire ?",
+    opts:["Ignorer — 5 utilisateurs c'est insuffisant statistiquement","Lancer la plateforme et corriger après","Retourner à l'étape Définition et reformuler si nécessaire","Abandonner le projet"],
+    correct:2, expl:"Le processus est itératif. Un retour massif sur la navigation peut signaler un problème de définition ou de concept. On revient en arrière.", step:"Test", badge:"tes"
+  },
+  {
+    q:"Quelle est la principale différence entre Design Thinking et Lean Startup ?",
+    opts:["Le Design Thinking est uniquement pour les designers","Le Lean Startup ignore l'utilisateur final","Le DT centre sur le besoin humain, le Lean Startup valide le modèle économique","Les deux méthodes sont identiques"],
+    correct:2, expl:"DT = comprendre le besoin humain + créativité. Lean Startup = tester rapidement la viabilité économique avec un MVP. Complémentaires.", step:"Comparaison", badge:"mas"
+  }
+];
+
+const BADGES = [
+  {id:"emp",icon:"❤️",bg:"var(--emp-bg)",title:"Empathiste",desc:"Maître de l'étape Empathie",req:"Q1 réussie"},
+  {id:"def",icon:"🎯",bg:"var(--def-bg)",title:"Définisseur",desc:"Expert en formulation POV",req:"Q2 réussie"},
+  {id:"ide",icon:"🧠",bg:"var(--ide-bg)",title:"Idéateur",desc:"Maître du brainstorming",req:"Q3 réussie"},
+  {id:"pro",icon:"🔧",bg:"var(--pro-bg)",title:"Prototypeur",desc:"Spécialiste du prototypage rapide",req:"Q4 réussie"},
+  {id:"tes",icon:"🧪",bg:"var(--tes-bg)",title:"Testeur",desc:"Expert en tests utilisateurs",req:"Q5 réussie"},
+  {id:"mas",icon:"👑",bg:"rgba(167,139,250,0.12)",title:"DT Master",desc:"Score parfait au quiz",req:"100% au quiz"}
+];
+
+const CASES = [
+  {
+    title:"Système de surveillance qualité eau — IoT",
+    domain:"Génie industriel / IoT",
+    tags:["IoT","Environnement","Capteurs"],
+    color:"var(--def)",
+    problem:"Les techniciens de traitement d'eau perdent 3h/jour à relever manuellement les mesures sur 12 capteurs répartis sur 2 km.",
+    steps:[
+      {phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Interview de 8 techniciens → frustration principale : déplacements inutiles + données perdues sur papier"},
+      {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Ali, technicien senior, a besoin de visualiser toutes les mesures en temps réel parce que les déplacements réduisent le temps de traitement"},
+      {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"32 idées générées → top 3 : dashboard web temps réel, alertes SMS, rapport automatique PDF"},
+      {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Maquette Figma du dashboard + Arduino simulant 3 capteurs → testé en 2 jours"},
+      {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"5 techniciens testent → 80% de satisfaction, problème identifié : alertes trop fréquentes → ajustement des seuils"}
+    ],
+    outcome:"Réduction de 70% des déplacements. Projet réel mené en école d'ingénieurs, Casablanca."
+  },
+  {
+    title:"Plateforme de stages connectée — GRH numérique",
+    domain:"Génie informatique / RH",
+    tags:["EdTech","RH","Web"],
+    color:"var(--ide)",
+    problem:"Les étudiants en ingénierie perdent en moyenne 6 semaines à trouver un stage par manque de visibilité sur les offres locales.",
+    steps:[
+      {phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Questionnaire 120 étudiants + 15 entretiens entreprises → besoin de matching automatique par compétences"},
+      {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Fatima, étudiante 4e année, a besoin d'un accès centralisé aux offres parce que les canaux actuels sont fragmentés"},
+      {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"Atelier 2h, 45 idées → sélection : matching par compétences, chat direct recruteur, calendrier de suivi"},
+      {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Formulaire Google + tableur automatisé comme MVP — testé en 3 jours avec 30 étudiants"},
+      {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"Pilote avec 30 étudiants, 4 entreprises → 12 stages trouvés en 2 semaines vs 6 semaines habituellement"}
+    ],
+    outcome:"Temps de recherche réduit de 67%. Prototype transformé en startup par les étudiants de l'ENSIAS."
+  },
+  {
+    title:"Assistant IA pour maintenance prédictive",
+    domain:"Génie mécanique / IA",
+    tags:["IA","Industrie 4.0","ML"],
+    color:"var(--tes)",
+    problem:"Une usine de textile perd 15% de production par mois à cause de pannes machines non anticipées.",
+    steps:[
+      {phase:"Empathie",col:"var(--emp)",bg:"var(--emp-bg)",text:"Shadowing 3 jours en usine → les techniciens ignorent les signaux faibles précurseurs de pannes"},
+      {phase:"Définition",col:"var(--def)",bg:"var(--def-bg)",text:"POV : Hassan, responsable maintenance, a besoin d'anticiper les pannes parce que chaque arrêt coûte 8000 MAD/heure"},
+      {phase:"Idéation",col:"var(--ide)",bg:"var(--ide-bg)",text:"SCAMPER + HMW → idée retenue : modèle ML sur vibrations + température + tableau de bord alertes"},
+      {phase:"Prototype",col:"var(--pro)",bg:"var(--pro-bg)",text:"Modèle Python simplifié sur données historiques + dashboard Streamlit en 1 semaine"},
+      {phase:"Test",col:"var(--tes)",bg:"var(--tes-bg)",text:"Test sur 2 machines pendant 1 mois → 3 pannes anticipées sur 3 → validation complète du concept"}
+    ],
+    outcome:"ROI potentiel calculé : 480 000 MAD/an. Projet présenté au Forum des Entreprises ENSAM."
+  }
+];
+
+// STATE
+let state = {
+  score: 0,
+  qIdx: 0,
+  answered: false,
+  correct: 0,
+  unlocked: new Set(),
+  activeStep: 0,
+  caseOpen: -1
+};
+
+function updateStats(){
+  document.getElementById("score-display").textContent = state.score;
+  document.getElementById("stat-score").textContent = state.score;
+  document.getElementById("stat-badges").textContent = state.unlocked.size+"/6";
+  document.getElementById("stat-correct").textContent = state.correct+"/6";
+}
+
+// SECTIONS
+function showSection(id, btn){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".nav-tab").forEach(b=>b.classList.remove("active"));
+  document.getElementById("sec-"+id).classList.add("active");
+  if(btn) btn.classList.add("active");
+  if(id==="quiz") renderQuiz();
+  if(id==="badges") renderBadges();
+  if(id==="cases") renderCases();
+}
+
+// STEPS (home)
+function renderStepsGrid(){
+  const g = document.getElementById("steps-grid");
+  const active = state.activeStep;
+  g.innerHTML = STEPS.map((s,i)=>`
+    <div class="step-detail ${i===4?'span2':''}" style="cursor:pointer;border-left:${i===active?'2px solid '+s.color:'none'}" onclick="goStep(${i})">
+      <div class="step-header">
+        <div class="step-icon" style="background:${s.bg}">${s.icon}</div>
+        <div>
+          <div class="step-label" style="color:${s.color}">${s.label} — ${s.name}</div>
+          <div class="step-name" style="font-size:14px;font-weight:400;color:var(--muted);margin-top:2px">${s.desc.slice(0,70)}...</div>
+        </div>
+      </div>
+      ${i===active?`
+        <div class="step-desc">${s.desc}</div>
+        <div class="step-example" style="color:${s.color};border-left-color:${s.color}">${s.example}</div>
+        <div class="tools-row">
+          ${s.tools.map(t=>`<span class="tool-chip" style="border-color:${s.color}20;color:${s.color}">${t}</span>`).join('')}
+        </div>
+      `:''}
+    </div>
+  `).join('');
+}
+
+function goStep(i){
+  state.activeStep = i;
+  document.querySelectorAll(".flow-step").forEach((el,idx)=>{
+    el.classList.remove("active");
+    if(idx===i) el.classList.add("active");
+  });
+  renderStepsGrid();
+}
+
+// QUIZ
+function renderQuiz(){
+  if(state.qIdx >= QUIZ.length){ renderQuizEnd(); return; }
+  const q = QUIZ[state.qIdx];
+  const pct = Math.round((state.qIdx/QUIZ.length)*100);
+  const stepColors = {"Empathie":"var(--emp)","Définition":"var(--def)","Idéation":"var(--ide)","Prototype":"var(--pro)","Test":"var(--tes)","Comparaison":"var(--ide)"};
+  const col = stepColors[q.step]||"var(--ide)";
+
+  document.getElementById("quiz-container").innerHTML = `
+    <div class="quiz-progress">
+      <div class="q-bar"><div class="q-bar-fill" style="width:${pct}%"></div></div>
+      <div class="q-label">Q${state.qIdx+1} / ${QUIZ.length}</div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-tag" style="background:rgba(255,255,255,0.04);border:1px solid ${col}40;color:${col}">${q.step}</div>
+      <div class="quiz-question">${q.q}</div>
+      <div id="opts-wrap">
+        ${q.opts.map((o,i)=>`
+          <button class="opt" id="opt-${i}" onclick="answerQ(${i})">
+            <span class="opt-letter">${String.fromCharCode(65+i)}</span>
+            ${o}
+          </button>
+        `).join('')}
+      </div>
+      <div id="quiz-feedback" class="feedback-box"></div>
+    </div>
+  `;
+}
+
+function answerQ(i){
+  if(state.answered) return;
+  state.answered = true;
+  const q = QUIZ[state.qIdx];
+  document.querySelectorAll(".opt").forEach(b=>b.classList.add("locked"));
+  if(i===q.correct){
+    document.getElementById("opt-"+i).classList.add("correct");
+    state.score += 10; state.correct++;
+    state.unlocked.add(q.badge);
+    if(state.correct===QUIZ.length) state.unlocked.add("mas");
+    const fb = document.getElementById("quiz-feedback");
+    fb.className = "feedback-box show good";
+    fb.innerHTML = `<div class="feedback-title">✓ Correct ! +10 points</div>${q.expl}`;
+  } else {
+    document.getElementById("opt-"+i).classList.add("wrong");
+    document.getElementById("opt-"+q.correct).classList.add("correct");
+    const fb = document.getElementById("quiz-feedback");
+    fb.className = "feedback-box show bad";
+    fb.innerHTML = `<div class="feedback-title">✗ Incorrect</div>${q.expl}`;
+  }
+  updateStats();
+  const next = document.createElement("div");
+  next.className = "btn-row";
+  next.innerHTML = `<button class="btn primary" onclick="nextQ()">${state.qIdx<QUIZ.length-1?'Question suivante →':'Voir mon score →'}</button>`;
+  document.getElementById("quiz-feedback").appendChild(next);
+}
+
+function nextQ(){
+  state.qIdx++; state.answered=false; renderQuiz();
+}
+
+function renderQuizEnd(){
+  const pct = Math.round((state.correct/QUIZ.length)*100);
+  const grade = pct===100?"Parfait !":pct>=80?"Excellent !":pct>=60?"Bien !":"À retravailler";
+  const gradeColor = pct>=80?"var(--tes)":pct>=60?"var(--pro)":"var(--emp)";
+  document.getElementById("quiz-container").innerHTML = `
+    <div class="result-card">
+      <div class="result-score" style="color:${gradeColor}">${pct}%</div>
+      <div class="result-label">${grade} · ${state.correct}/${QUIZ.length} bonnes réponses</div>
+      <div class="result-grid">
+        <div class="result-stat"><div class="result-stat-val" style="color:var(--ide)">${state.score}</div><div class="result-stat-lbl">Points</div></div>
+        <div class="result-stat"><div class="result-stat-val" style="color:var(--tes)">${state.unlocked.size}</div><div class="result-stat-lbl">Badges</div></div>
+        <div class="result-stat"><div class="result-stat-val" style="color:var(--pro)">${state.correct}</div><div class="result-stat-lbl">Réussies</div></div>
+      </div>
+      <div class="btn-row" style="justify-content:center">
+        <button class="btn primary" onclick="resetQuiz()">Recommencer</button>
+        <button class="btn" onclick="showSection('badges',document.querySelector('.nav-tab:nth-child(3)'))">Voir mes badges</button>
+      </div>
+    </div>
+  `;
+}
+
+function resetQuiz(){
+  state.qIdx=0; state.score=0; state.answered=false; state.correct=0; state.unlocked=new Set();
+  updateStats(); renderQuiz();
+}
+
+// BADGES
+function renderBadges(){
+  document.getElementById("badges-grid").innerHTML = BADGES.map(b=>{
+    const ok = state.unlocked.has(b.id);
+    return `<div class="badge-card ${ok?'unlocked':'locked'}">
+      <div class="badge-icon" style="background:${b.bg}">${b.icon}</div>
+      <div class="badge-title">${b.title}</div>
+      <div class="badge-desc">${ok?b.desc:b.req}</div>
+      <span class="badge-status ${ok?'ok':'no'}">${ok?'✓ Obtenu':'Verrouillé'}</span>
+    </div>`;
+  }).join('');
+}
+
+// CASES
+function renderCases(){
+  const nums = ["01","02","03"];
+  document.getElementById("cases-list").innerHTML = CASES.map((c,ci)=>`
+    <div class="case-item">
+      <div class="case-header" onclick="toggleCase(${ci})">
+        <div class="case-number" style="background:rgba(255,255,255,0.04);color:${c.color}">${nums[ci]}</div>
+        <div class="case-meta">
+          <div class="case-title">${c.title}</div>
+          <div class="case-domain">${c.domain}</div>
+        </div>
+        <div class="case-tags" style="display:flex;gap:6px;flex-wrap:wrap">
+          ${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+        </div>
+        <span class="case-chevron ${state.caseOpen===ci?'open':''}">▾</span>
+      </div>
+      <div class="case-body ${state.caseOpen===ci?'open':''}">
+        <div class="case-problem"><strong>Problème :</strong> ${c.problem}</div>
+        <div class="case-steps">
+          ${c.steps.map(s=>`
+            <div class="case-step">
+              <span class="case-step-badge" style="background:${s.bg};color:${s.col};border:1px solid ${s.col}30">${s.phase}</span>
+              <span class="case-step-text">${s.text}</span>
+            </div>`).join('')}
+        </div>
+        <div class="case-outcome"><strong>Résultat :</strong> ${c.outcome}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCase(ci){
+  state.caseOpen = state.caseOpen===ci ? -1 : ci;
+  renderCases();
+}
+
+function saveProject(){
+  const saved = document.getElementById("pj-saved");
+  saved.style.display = "block";
+  setTimeout(()=>saved.style.display="none", 3000);
+}
+
+// INIT
+renderStepsGrid();
+updateStats();
+</script>
+</body>
+</html>
